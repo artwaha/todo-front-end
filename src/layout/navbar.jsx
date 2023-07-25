@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const taskData = require("../data/task-data");
+const taskService = require("../service/task-service");
 
 const Navbar = () => {
   const [allTasks, setAllTasks] = useState(0);
@@ -8,10 +8,17 @@ const Navbar = () => {
   const [pendingTasks, setPendingTasks] = useState(0);
 
   useEffect(() => {
-    const count = taskData.countTasks();
-    setAllTasks(count.all);
-    setDoneTasks(count.done);
-    setPendingTasks(count.pending);
+    async function fetchData() {
+      try {
+        const count = await taskService.countTasks();
+        setAllTasks(count.all);
+        setDoneTasks(count.done);
+        setPendingTasks(count.pending);
+      } catch (error) {
+        console.error({ layer: "VIEW", error });
+      }
+    }
+    fetchData();
   }, []);
 
   return (

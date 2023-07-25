@@ -60,11 +60,10 @@ module.exports = {
 let tasks = [
   // Task 1
   {
-    id: 1,
     title: "Complete Project Proposal",
     description: "Write a comprehensive project proposal for the new client.",
     priority: "HIGH",
-    isCompleted: true,
+    completed: true,
     createdAt: "2023-07-21T10:00:00",
     createdBy: {
       id: 1,

@@ -1,6 +1,6 @@
-import moment from "moment/moment";
+
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const taskService = require("../service/task-service");
 const collaboratorService = require("../service/collaborator-service");
 const userService = require("../service/user-service");
@@ -9,11 +9,12 @@ const TaskDetails = () => {
   const [task, setTask] = useState({});
   const [collaborators, setCollaborators] = useState([]);
   const [usersToInvite, setUsersToInvite] = useState([]);
+  const { taskId } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setTask(await taskService.getTaskDetails(1));
+        setTask(await taskService.getTaskDetails(taskId));
         setCollaborators(await collaboratorService.getTaskCollaborators(1, 1));
         setUsersToInvite(await userService.getTaskCollaborators(1, 1));
       } catch (error) {
@@ -21,7 +22,7 @@ const TaskDetails = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [taskId]);
 
   return (
     <>
@@ -50,7 +51,7 @@ const TaskDetails = () => {
             <p>
               <span>Last Updated: </span>
               <span className="text-sm text-gray-600">
-                {moment().format(task.lastUpdated)}
+                {task.lastUpdated}
               </span>
             </p>
             <p>

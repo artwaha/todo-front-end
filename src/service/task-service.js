@@ -1,32 +1,28 @@
 import axios from "axios";
-const taskModel = require("../data/task-data");
 const BASE_URL = "http://localhost:8080/api/v1/tasks";
 
-export const getAllTasks = async () => {
+export const getAllTasks = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}`);
-    console.log("All Tasks: ", response.data);
-    return taskModel.allTasks();
+    const response = await axios.get(`${BASE_URL}/users/${userId}`);
+    return response.data;
   } catch (error) {
     console.error({ layer: "SERVICE", error });
   }
 };
 
-export const getDoneTasks = async () => {
+export const getDoneTasks = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/done`);
-    console.log("Done Tasks: ",response.data);
-    return taskModel.doneTasks();
+    const response = await axios.get(`${BASE_URL}/users/${id}/done`);
+    return response.data;
   } catch (error) {
     console.error({ layer: "SERVICE", error });
   }
 };
 
-export const getPendingTasks = async () => {
+export const getPendingTasks = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}`);
-    console.log("Pending Tasks: ",response.data);
-    return taskModel.pendingTasks();
+    const response = await axios.get(`${BASE_URL}/users/${id}/pending`);
+    return response.data;
   } catch (error) {
     console.error({ layer: "SERVICE", error });
   }
@@ -34,16 +30,17 @@ export const getPendingTasks = async () => {
 
 export const getTaskDetails = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}?id=${id}`);
-    return response.data[0];
+    const response = await axios.get(`${BASE_URL}/${id}`);
+    return response.data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const countTasks = () => {
+export const countTasks = async () => {
   try {
-    return taskModel.countTasks();
+    const response = await axios.get(`${BASE_URL}/users/1/count`);
+    return response.data;
   } catch (error) {
     console.log({ layer: "SERVICE", error });
   }

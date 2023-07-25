@@ -4,62 +4,41 @@ import SEO from "../layout/seo";
 const taskService = require("../service/task-service");
 
 const Tasks = ({ location }) => {
-  const [data, setData] = useState([]);
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
       switch (location) {
         case "Done":
-          setData(await taskService.getDoneTasks());
-          // console.log("Done");
+          setTasks(await taskService.getDoneTasks(1));
           break;
         case "Pending":
-          setData(await taskService.getPendingTasks());
-          // console.log("Pending");
+          setTasks(await taskService.getPendingTasks(1));
           break;
         default:
-          setData(await taskService.getAllTasks());
-          // console.log("All");
+          setTasks(await taskService.getAllTasks(1));
           break;
       }
     }
     fetchData();
   }, [location]);
 
-  const fetchTasks = () => {
-    if (location === "Done") {
-      return taskService
-        .getDoneTasks()
-        .map((task, index) => <TaskItem task={task} key={index} />);
-    } else if (location === "Pending") {
-      return taskService
-        .getPendingTasks()
-        .map((task, index) => <TaskItem task={task} key={index} />);
-    } else {
-      return taskService
-        .getAllTasks()
-        .map((task, index) => <TaskItem task={task} key={index} />);
-    }
-  };
-
   return (
     <>
       {seo()}
-      {/* {displayTasks()} */}
-
-      {}
+      {displayTasks()}
     </>
   );
 
   function displayTasks() {
-    return fetchTasks().length <= 0 ? (
-      // Return location only when location != All i.e. when location is Done or Pending
+    return tasks.length <= 0 ? (
       <div>No {location !== "All" && location} Tasks</div>
     ) : (
       <>
         {titleBar()}
-        {fetchTasks()}
+        {tasks.map((task, index) => (
+          <TaskItem task={task} key={index} />
+        ))}
       </>
     );
   }
