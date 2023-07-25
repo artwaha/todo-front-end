@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 const taskService = require("../service/task-service");
@@ -50,9 +49,7 @@ const TaskDetails = () => {
           <>
             <p>
               <span>Last Updated: </span>
-              <span className="text-sm text-gray-600">
-                {task.lastUpdated}
-              </span>
+              <span className="text-sm text-gray-600">{task.lastUpdated}</span>
             </p>
             <p>
               <span>Updated By: </span>
