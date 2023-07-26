@@ -14,8 +14,10 @@ const TaskDetails = () => {
     async function fetchData() {
       try {
         setTask(await taskService.getTaskDetails(taskId));
-        setCollaborators(await collaboratorService.getTaskCollaborators(1, 1));
-        setUsersToInvite(await userService.getTaskCollaborators(1, 1));
+        setCollaborators(
+          await collaboratorService.getTaskCollaborators(1, taskId)
+        );
+        setUsersToInvite(await userService.getUsersToInvite(1, taskId));
       } catch (error) {
         console.error({ layer: "VIEW", error });
       }
