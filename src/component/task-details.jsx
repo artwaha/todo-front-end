@@ -8,22 +8,30 @@ const TaskDetails = () => {
   const [task, setTask] = useState({});
   const [collaborators, setCollaborators] = useState([]);
   const [usersToInvite, setUsersToInvite] = useState([]);
+  const [pendingInvitations, setPendingInvitations] = useState([]);
   const { taskId } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setTask(await taskService.getTaskDetails(taskId));
+        setTask(await taskService.getTaskDetails(taskId, 1));
         setCollaborators(
           await collaboratorService.getTaskCollaborators(1, taskId)
         );
         setUsersToInvite(await userService.getUsersToInvite(1, taskId));
+        setPendingInvitations(
+          await userService.getPendingInvitations(1, taskId)
+        );
       } catch (error) {
         console.error({ layer: "VIEW", error });
       }
     }
     fetchData();
   }, [taskId]);
+
+  function handleInvite(data) {
+    console.log(data);
+  }
 
   return (
     <>
@@ -37,10 +45,11 @@ const TaskDetails = () => {
       <div>Loading</div>
     ) : (
       <div className="p-4">
-        <h2 className="flex items-center mb-2">
-          <span className="text-3xl font-">{task.title} </span>
-          <span className={getStyles()}>{task.priority}</span>
-        </h2>
+        <div className="mb-2">
+          <h1 className="text-2xl flex items-center font-semibold">
+            {task.title} <span className={getStyles()}>{task.priority}</span>
+          </h1>
+        </div>
         <p className="text-gray-600 text-lg mb-6">{task.description}</p>
 
         <p>
@@ -76,12 +85,32 @@ const TaskDetails = () => {
           <p className="text-gray-600 mt-2">No collaborators for this task.</p>
         )}
 
+        <h3 className="text-xl font-semibold mt-8">Pending Invitations:</h3>
+        {pendingInvitations.length > 0 ? (
+          <ul className="list-disc pl-6 text-gray-600">
+            {pendingInvitations.map((user) => (
+              <li key={user.id} className="text-gray-700">
+                {user.name}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-600 mt-2">No Pending Invitations.</p>
+        )}
+
         <h3 className="text-xl font-semibold mt-8">Users to Invite:</h3>
         {usersToInvite.length > 0 ? (
           <ul className="list-disc pl-6 text-gray-600">
             {usersToInvite.map((user) => (
-              <li key={user.id} className="text-gray-700">
+              <li key={user.id} className="text-gray-700 p-1">
                 {user.name}
+                <button
+                  onClick={() => handleInvite(user)}
+                  className="text-xs ml-1 px-2 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 font-semibold shadow-md transition duration-300 ease-in-out"
+                  // className="font-mono text-xs ml-1 px-2 py-1 bg-teal-400 text-white rounded hover:bg-teal-500 font-semibold shadow-md transition duration-300 ease-in-out"
+                >
+                  Invite
+                </button>
               </li>
             ))}
           </ul>

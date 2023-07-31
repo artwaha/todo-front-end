@@ -28,9 +28,9 @@ export const getPendingTasks = async (id) => {
   }
 };
 
-export const getTaskDetails = async (id) => {
+export const getTaskDetails = async (taskId, userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/${id}`);
+    const response = await axios.get(`${BASE_URL}/${taskId}/users/${userId}`);
     return response.data;
   } catch (error) {
     console.error(error);

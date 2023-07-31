@@ -11,3 +11,15 @@ export const getUsersToInvite = async (userId, taskId) => {
     console.error(error);
   }
 };
+
+export const getPendingInvitations = async (userId, taskId) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/${userId}/tasks/${taskId}/pending`
+    );
+    return response.data;
+    // console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
