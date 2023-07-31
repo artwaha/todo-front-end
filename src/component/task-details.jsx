@@ -9,6 +9,7 @@ const TaskDetails = () => {
   const [collaborators, setCollaborators] = useState([]);
   const [usersToInvite, setUsersToInvite] = useState([]);
   const [pendingInvitations, setPendingInvitations] = useState([]);
+  const [collaborator, setcollaborator] = useState({});
   const { taskId } = useParams();
 
   useEffect(() => {
@@ -27,10 +28,16 @@ const TaskDetails = () => {
       }
     }
     fetchData();
-  }, [taskId]);
+  }, [taskId, collaborator]);
 
-  function handleInvite(data) {
-    console.log(data);
+  async function handleInvite(user) {
+    try {
+      await collaboratorService.inviteUser({ userId: user.id, taskId: taskId });
+      // To refresh component
+      setcollaborator({ userId: user.id, taskId: taskId });
+    } catch (error) {
+      console.error({ layer: "VIEW", error });
+    }
   }
 
   return (

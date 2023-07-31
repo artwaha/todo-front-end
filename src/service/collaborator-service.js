@@ -12,3 +12,12 @@ export const getTaskCollaborators = async (userId, taskId) => {
     console.error(error);
   }
 };
+
+export const inviteUser = async (data) => {
+  try {
+    const response = await axios.post(`${BASE_URL}`, data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

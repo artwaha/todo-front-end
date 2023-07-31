@@ -18,8 +18,9 @@ export const getPendingInvitations = async (userId, taskId) => {
       `${BASE_URL}/${userId}/tasks/${taskId}/pending`
     );
     return response.data;
-    // console.log(response.data);
   } catch (error) {
     console.error(error);
   }
 };
+
+
