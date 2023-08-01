@@ -7,6 +7,8 @@ import Tasks from "./component/tasks";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import TaskDetails from "./component/task-details";
+import ViewMode from "./component/view-mode";
+import EditMode from "./component/edit-mode";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -34,6 +36,16 @@ const router = createBrowserRouter([
       {
         path: "/tasks/:taskId",
         element: <TaskDetails />,
+        children: [
+          {
+            index: true,
+            element: <ViewMode />,
+          },
+          {
+            path: "edit",
+            element: <EditMode />,
+          },
+        ],
       },
     ],
   },

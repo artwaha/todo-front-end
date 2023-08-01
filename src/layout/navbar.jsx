@@ -22,8 +22,8 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="p-4 border-b text-xs">
-      <ul className="flex justify-around p-0">
+    <nav className="p-4">
+      <ul className="flex justify-around text-xs">
         <li>
           <Link
             to="/tasks"

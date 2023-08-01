@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import TaskItem from "./task-item";
 import SEO from "../layout/seo";
+import Title from "../layout/title";
 const taskService = require("../service/task-service");
 
 const Tasks = ({ location }) => {
   const [tasks, setTasks] = useState([]);
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       switch (location) {
         case "Done":
+          setTitle("Done Tasks");
           setTasks(await taskService.getDoneTasks(1));
           break;
         case "Pending":
+          setTitle("Pending Tasks");
           setTasks(await taskService.getPendingTasks(1));
           break;
         default:
+          setTitle("All Tasks");
           setTasks(await taskService.getAllTasks(1));
           break;
       }
@@ -25,6 +30,7 @@ const Tasks = ({ location }) => {
 
   return (
     <>
+      <Title title={title} />
       {seo()}
       {displayTasks()}
     </>
