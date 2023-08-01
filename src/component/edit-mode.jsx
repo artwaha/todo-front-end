@@ -69,13 +69,13 @@ const EditMode = () => {
           {collaborators.length > 0 ? (
             <ul className="list-disc pl-6 text-gray-600 text-sm">
               {collaborators.map((collaborator) => (
-                <li key={collaborator.id} className="text-gray-700">
+                <li key={collaborator.id} className="mt-1">
                   {collaborator.user.name}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-gray-600 mt-2">
+            <p className="text-gray-600 mt-2 text-sm pl-2">
               No collaborators for this task.
             </p>
           )}
@@ -86,15 +86,17 @@ const EditMode = () => {
             Pending Invitations
           </label>
           {pendingInvitations.length > 0 ? (
-            <ul className="list-disc pl-6 text-gray-600">
+            <ul className="list-disc pl-6 text-gray-600 text-sm">
               {pendingInvitations.map((user) => (
-                <li key={user.id} className="text-gray-700">
+                <li key={user.id} className="mt-1">
                   {user.name}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-gray-600 mt-2">No Pending Invitations.</p>
+            <p className="text-gray-600 mt-2 text-sm pl-2">
+              No Pending Invitations.
+            </p>
           )}
         </div>
 
@@ -103,9 +105,9 @@ const EditMode = () => {
             Users to Invite
           </label>
           {usersToInvite.length > 0 ? (
-            <ul className="list-disc pl-6 text-gray-600 text-sm">
+            <ul className="list-disc pl-6 text-sm text-gray-600">
               {usersToInvite.map((user) => (
-                <li key={user.id} className="text-gray-700 p-1">
+                <li key={user.id} className="mt-1">
                   {user.name}
                   <button
                     onClick={() => handleInvite(user)}
@@ -117,7 +119,9 @@ const EditMode = () => {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-600 mt-2">No Users to invite .</p>
+            <p className="text-gray-600 mt-2 text-sm pl-2">
+              No Users to invite .
+            </p>
           )}
         </div>
       </div>
