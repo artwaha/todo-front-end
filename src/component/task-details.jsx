@@ -7,15 +7,24 @@ const collaboratorService = require("../service/collaborator-service");
 const userService = require("../service/user-service");
 
 const TaskDetails = () => {
+  // React Router Variables
   const navigate = useNavigate();
   const { taskId } = useParams();
+
+  // Use state variables
   const [mode, setMode] = useState("");
   const [task, setTask] = useState({});
   const [collaborators, setCollaborators] = useState([]);
   const [usersToInvite, setUsersToInvite] = useState([]);
   const [pendingInvitations, setPendingInvitations] = useState([]);
-  const [collaborator, setcollaborator] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    status: "",
+    priority: "",
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -33,13 +42,24 @@ const TaskDetails = () => {
       }
     }
     fetchData();
-  }, [taskId, collaborator]);
+    // TODO: update state
+  }, [taskId, isLoading]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  };
 
   async function handleInvite(user) {
     try {
       await collaboratorService.inviteUser({ userId: user.id, taskId: taskId });
       // To refresh component
-      setcollaborator({ userId: user.id, taskId: taskId });
+      setIsLoading(false);
     } catch (error) {
       console.error({ layer: "VIEW", error });
     }
@@ -56,6 +76,28 @@ const TaskDetails = () => {
     }
   };
 
+  const handleSave = () => {
+    // Get Dirty fields
+    const dirtyFields = Object.keys(formData).filter(
+      (key) => formData[key] !== ""
+    );
+
+    // Only save the dirty fields
+    const updatedFormData = {};
+    dirtyFields.forEach((field) => {
+      // Convert the status value to boolean
+      if (field === "status") {
+        updatedFormData[field] = formData[field] === "true";
+      } else {
+        updatedFormData[field] = formData[field];
+      }
+    });
+
+    // save the updated form data
+    console.log(updatedFormData);
+    navigate(`/tasks/${taskId}`);
+  };
+
   const childContext = {
     task,
     collaborators,
@@ -64,6 +106,7 @@ const TaskDetails = () => {
     handleInvite,
     setMode,
     setTitle,
+    handleChange,
   };
 
   return (
@@ -77,24 +120,41 @@ const TaskDetails = () => {
 
   function controlButtons() {
     return (
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex items-center mb-4">
         {backButton()}
-        <div>
-          <label className="text-sm mr-1 font-medium">Mode:</label>
-          <select
-            onChange={handleChangeMode}
-            value={mode}
-            className="p-1 border border-green-300 mt-1 text-sm outline-none"
-          >
-            <option value="view" disabled={mode === "view" ? true : false}>
-              View
-            </option>
-            <option disabled={mode === "edit" ? true : false} value="edit">
-              Edit
-            </option>
-          </select>
-        </div>
+        {saveButton()}
+        {modeButton()}
       </div>
+    );
+  }
+
+  function modeButton() {
+    return (
+      <select
+        onChange={handleChangeMode}
+        value={mode}
+        className="outline-none mr-2 text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+      >
+        <option value="view" className="text-black">
+          View Mode
+        </option>
+        <option value="edit" className="text-black">
+          Edit Mode
+        </option>
+      </select>
+    );
+  }
+
+  function saveButton() {
+    return (
+      mode === "edit" && (
+        <button
+          onClick={handleSave}
+          className="mr-2 text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+        >
+          Save
+        </button>
+      )
     );
   }
 
@@ -102,7 +162,7 @@ const TaskDetails = () => {
     return (
       <Link
         to="/tasks"
-        className="text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+        className="mr-auto text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

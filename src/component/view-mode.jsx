@@ -15,9 +15,6 @@ const ViewMode = () => {
   useEffect(() => {
     setTitle("Task Details");
     setMode("view");
-    return () => {
-      setMode("");
-    };
   }, [setMode, setTitle]);
 
   return <>{taskDetails(task)}</>;

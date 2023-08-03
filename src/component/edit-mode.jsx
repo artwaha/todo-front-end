@@ -10,17 +10,15 @@ const EditMode = () => {
     pendingInvitations,
     handleInvite,
     setMode,
+    handleChange,
   } = useOutletContext();
 
   useEffect(() => {
     setTitle("Edit Task");
     setMode("edit");
-    return () => {
-      setMode("");
-    };
   }, [setMode, setTitle]);
 
-  return taskDetails();
+  return <>{taskDetails()}</>;
 
   function taskDetails() {
     return (
@@ -28,6 +26,8 @@ const EditMode = () => {
         <div>
           <label className="block font-medium text-gray-700">Title</label>
           <input
+            name="title"
+            onChange={handleChange}
             placeholder={task.title}
             className="p-1 border border-blue-300 outline-none w-full mt-1 text-sm"
           />
@@ -36,6 +36,8 @@ const EditMode = () => {
         <div className="mt-4">
           <label className="block font-medium text-gray-700">Description</label>
           <textarea
+            name="description"
+            onChange={handleChange}
             placeholder={task.description}
             className="p-1 border border-blue-300 outline-none w-full mt-1 text-sm"
           />
@@ -44,6 +46,8 @@ const EditMode = () => {
         <div className="mt-4">
           <label className="block font-medium text-gray-700">Status</label>
           <select
+            name="status"
+            onChange={handleChange}
             defaultValue={task.completed}
             className="p-1 border border-blue-300 mt-1 text-sm outline-none"
           >
@@ -55,6 +59,8 @@ const EditMode = () => {
         <div className="mt-4">
           <label className="block font-medium text-gray-700">Priority</label>
           <select
+            name="priority"
+            onChange={handleChange}
             defaultValue={task.priority}
             className="p-1 border border-blue-300 mt-1 text-sm outline-none"
           >
