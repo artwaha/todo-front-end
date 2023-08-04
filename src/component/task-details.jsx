@@ -20,7 +20,14 @@ const TaskDetails = () => {
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCollaborators, setSelectedCollaborators] = useState([]);
-  const [markedForDeletion, setMarkedForDeletion] = useState([]);
+  const [collaboratorsMarkedForDeletion, setcollaboratorsMarkedForDeletion] =
+    useState([]);
+  const [selectedUsersToInvite, setSelectedUsersToInvite] = useState([]);
+  const [usersToInviteMarkedForDeletion, setUsersToInviteMarkedForDeletion] =
+    useState([]);
+  // const [selectedCollaborators, setSelectedCollaborators] = useState([]);
+  // const [collaboratorsMarkedForDeletion, setcollaboratorsMarkedForDeletion] =
+  useState([]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -50,7 +57,9 @@ const TaskDetails = () => {
     // TODO: update state
   }, [taskId, isLoading]);
 
-  const handleToggleSelection = (collaborator) => {
+  // Collaborators
+
+  const handleCollaboratorsToggleSelection = (collaborator) => {
     if (selectedCollaborators.includes(collaborator)) {
       setSelectedCollaborators((prevSelected) =>
         prevSelected.filter((c) => c !== collaborator)
@@ -63,16 +72,49 @@ const TaskDetails = () => {
     }
   };
 
-  const handleMarkForRemoval = (collaborator) => {
-    setMarkedForDeletion((prevMarked) => [...prevMarked, collaborator]);
-    handleToggleSelection(collaborator);
+  const handleCollaboratorsMarkForRemoval = (collaborator) => {
+    setcollaboratorsMarkedForDeletion((prevMarked) => [
+      ...prevMarked,
+      collaborator,
+    ]);
+    handleCollaboratorsToggleSelection(collaborator);
   };
 
-  const handleUndoSelection = (collaborator) => {
-    setMarkedForDeletion((prevMarked) =>
+  const handleCollaboratorsUndoSelection = (collaborator) => {
+    setcollaboratorsMarkedForDeletion((prevMarked) =>
       prevMarked.filter((c) => c !== collaborator)
     );
-    handleToggleSelection(collaborator);
+    handleCollaboratorsToggleSelection(collaborator);
+  };
+
+  // Users to Invite
+
+  const handleUsersToInviteToggleSelection = (userToInvite) => {
+    if (selectedUsersToInvite.includes(userToInvite)) {
+      setSelectedUsersToInvite((prevSelected) =>
+        prevSelected.filter((c) => c !== userToInvite)
+      );
+    } else {
+      setSelectedUsersToInvite((prevSelected) => [
+        ...prevSelected,
+        userToInvite,
+      ]);
+    }
+  };
+
+  const handleUsersToInviteMarkForRemoval = (userToInvite) => {
+    setUsersToInviteMarkedForDeletion((prevMarked) => [
+      ...prevMarked,
+      userToInvite,
+    ]);
+    handleUsersToInviteToggleSelection(userToInvite);
+  };
+
+  const handleUsersToInviteUndoSelection = (userToInvite) => {
+    setUsersToInviteMarkedForDeletion((prevMarked) =>
+      prevMarked.filter((c) => c !== userToInvite)
+    );
+    handleUsersToInviteToggleSelection(userToInvite);
   };
 
   const handleChange = (event) => {
@@ -127,12 +169,21 @@ const TaskDetails = () => {
   }
 
   const handleSave = async () => {
-    console.log("Marked for deletion:", markedForDeletion);
-    const updatedFormData = getFormData();
-    setIsLoading(true);
-    await taskService.updateTask(updatedFormData, taskId, 1);
-    setIsLoading(false);
-    navigate(`/tasks/${taskId}`);
+    console.log(
+      "Collaborators Marked for deletion:",
+      collaboratorsMarkedForDeletion
+    );
+    console.log(
+      "Users to invite Marked for deletion:",
+      usersToInviteMarkedForDeletion
+    );
+    // const updatedFormData = getFormData();
+    // // TODO: check if form data is empty before saving
+    // // console.log(formData);
+    // setIsLoading(true);
+    // await taskService.updateTask(updatedFormData, taskId, 1);
+    // setIsLoading(false);
+    // navigate(`/tasks/${taskId}`);
   };
 
   const childContext = {
@@ -140,13 +191,17 @@ const TaskDetails = () => {
     collaborators,
     usersToInvite,
     pendingInvitations,
+    selectedUsersToInvite,
+    selectedCollaborators,
     handleInvite,
     setMode,
     setTitle,
     handleChange,
-    handleUndoSelection,
-    handleMarkForRemoval,
-    selectedCollaborators,
+    handleCollaboratorsUndoSelection,
+    handleCollaboratorsMarkForRemoval,
+    handleUsersToInviteToggleSelection,
+    handleUsersToInviteMarkForRemoval,
+    handleUsersToInviteUndoSelection,
   };
 
   return (
