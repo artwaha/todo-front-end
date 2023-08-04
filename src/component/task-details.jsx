@@ -17,12 +17,15 @@ const TaskDetails = () => {
   const [collaborators, setCollaborators] = useState([]);
   const [usersToInvite, setUsersToInvite] = useState([]);
   const [pendingInvitations, setPendingInvitations] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedCollaborators, setSelectedCollaborators] = useState([]);
+  const [markedForDeletion, setMarkedForDeletion] = useState([]);
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    status: "",
+    isCompleted: "",
     priority: "",
   });
 
@@ -30,6 +33,7 @@ const TaskDetails = () => {
     async function fetchData() {
       try {
         setTask(await taskService.getTaskDetails(taskId, 1));
+        // setTask({});
         setCollaborators(
           await collaboratorService.getTaskCollaborators(1, taskId)
         );
@@ -37,6 +41,7 @@ const TaskDetails = () => {
         setPendingInvitations(
           await userService.getPendingInvitations(1, taskId)
         );
+        setIsLoading(false);
       } catch (error) {
         console.error({ layer: "VIEW", error });
       }
@@ -44,6 +49,31 @@ const TaskDetails = () => {
     fetchData();
     // TODO: update state
   }, [taskId, isLoading]);
+
+  const handleToggleSelection = (collaborator) => {
+    if (selectedCollaborators.includes(collaborator)) {
+      setSelectedCollaborators((prevSelected) =>
+        prevSelected.filter((c) => c !== collaborator)
+      );
+    } else {
+      setSelectedCollaborators((prevSelected) => [
+        ...prevSelected,
+        collaborator,
+      ]);
+    }
+  };
+
+  const handleMarkForRemoval = (collaborator) => {
+    setMarkedForDeletion((prevMarked) => [...prevMarked, collaborator]);
+    handleToggleSelection(collaborator);
+  };
+
+  const handleUndoSelection = (collaborator) => {
+    setMarkedForDeletion((prevMarked) =>
+      prevMarked.filter((c) => c !== collaborator)
+    );
+    handleToggleSelection(collaborator);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -57,6 +87,7 @@ const TaskDetails = () => {
 
   async function handleInvite(user) {
     try {
+      setIsLoading(true);
       await collaboratorService.inviteUser({ userId: user.id, taskId: taskId });
       // To refresh component
       setIsLoading(false);
@@ -76,7 +107,7 @@ const TaskDetails = () => {
     }
   };
 
-  const handleSave = () => {
+  function getFormData() {
     // Get Dirty fields
     const dirtyFields = Object.keys(formData).filter(
       (key) => formData[key] !== ""
@@ -92,9 +123,15 @@ const TaskDetails = () => {
         updatedFormData[field] = formData[field];
       }
     });
+    return updatedFormData;
+  }
 
-    // save the updated form data
-    console.log(updatedFormData);
+  const handleSave = async () => {
+    console.log("Marked for deletion:", markedForDeletion);
+    const updatedFormData = getFormData();
+    setIsLoading(true);
+    await taskService.updateTask(updatedFormData, taskId, 1);
+    setIsLoading(false);
     navigate(`/tasks/${taskId}`);
   };
 
@@ -107,6 +144,9 @@ const TaskDetails = () => {
     setMode,
     setTitle,
     handleChange,
+    handleUndoSelection,
+    handleMarkForRemoval,
+    selectedCollaborators,
   };
 
   return (
@@ -114,9 +154,21 @@ const TaskDetails = () => {
       <SEO title="Task Details" description="Task Details" />
       <Title title={title} />
       {controlButtons()}
-      <Outlet context={childContext} />
+      {renderOutlet()}
     </>
   );
+
+  function renderOutlet() {
+    if (isLoading) {
+      return <div>Loading task details...</div>;
+    } else {
+      if (Object.keys(task).length <= 0) {
+        return <div>No Task details found</div>;
+      } else {
+        return <Outlet context={childContext} />;
+      }
+    }
+  }
 
   function controlButtons() {
     return (

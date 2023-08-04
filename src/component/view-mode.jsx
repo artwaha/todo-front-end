@@ -20,10 +20,8 @@ const ViewMode = () => {
   return <>{taskDetails(task)}</>;
 
   function taskDetails() {
-    return Object.keys(task).length <= 0 ? (
-      <div>Loading</div>
-    ) : (
-      <div>
+    return (
+      <>
         <div className="mb-2">
           <h1 className="text-2xl flex items-center font-semibold">
             {task.title} <span className={getStyles()}>{task.priority}</span>
@@ -36,7 +34,7 @@ const ViewMode = () => {
           <span className="text-sm text-gray-600">{task.createdBy.name}</span>
         </p>
         {task.updatedBy && (
-          <>
+          <span>
             <p>
               <span>Last Updated: </span>
               <span className="text-sm text-gray-600">{task.lastUpdated}</span>
@@ -48,7 +46,7 @@ const ViewMode = () => {
                 {task.updatedBy.name}
               </span>
             </p>
-          </>
+          </span>
         )}
 
         <h3 className="text-xl font-semibold mt-8">Collaborators:</h3>
@@ -85,20 +83,13 @@ const ViewMode = () => {
             {usersToInvite.map((user) => (
               <li key={user.id} className="mt-1">
                 {user.name}
-                <button
-                  onClick={() => handleInvite(user)}
-                  className="text-xs ml-1 px-2 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 font-semibold shadow-md transition duration-300 ease-in-out"
-                  // className="font-mono text-xs ml-1 px-2 py-1 bg-teal-400 text-white rounded hover:bg-teal-500 font-semibold shadow-md transition duration-300 ease-in-out"
-                >
-                  Invite
-                </button>
               </li>
             ))}
           </ul>
         ) : (
           <p className="text-gray-600 mt-2 pl-2">No Users to invite .</p>
         )}
-      </div>
+      </>
     );
   }
 
