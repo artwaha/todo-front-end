@@ -20,14 +20,13 @@ const TaskDetails = () => {
   const [title, setTitle] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCollaborators, setSelectedCollaborators] = useState([]);
-  const [collaboratorsMarkedForDeletion, setcollaboratorsMarkedForDeletion] =
-    useState([]);
+  const [markedCollaborators, setmarkedCollaborators] = useState([]);
   const [selectedUsersToInvite, setSelectedUsersToInvite] = useState([]);
-  const [usersToInviteMarkedForDeletion, setUsersToInviteMarkedForDeletion] =
-    useState([]);
-  // const [selectedCollaborators, setSelectedCollaborators] = useState([]);
-  // const [collaboratorsMarkedForDeletion, setcollaboratorsMarkedForDeletion] =
-  useState([]);
+  const [markedUsersToInvite, setmarkedUsersToInvite] = useState([]);
+  const [selectedPendingInvitations, setSelectedPendingInvitations] = useState(
+    []
+  );
+  const [markedPendingInvitations, setMarkedPendingInvitations] = useState([]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,7 +39,6 @@ const TaskDetails = () => {
     async function fetchData() {
       try {
         setTask(await taskService.getTaskDetails(taskId, 1));
-        // setTask({});
         setCollaborators(
           await collaboratorService.getTaskCollaborators(1, taskId)
         );
@@ -54,7 +52,6 @@ const TaskDetails = () => {
       }
     }
     fetchData();
-    // TODO: update state
   }, [taskId, isLoading]);
 
   // Collaborators
@@ -72,16 +69,13 @@ const TaskDetails = () => {
     }
   };
 
-  const handleCollaboratorsMarkForRemoval = (collaborator) => {
-    setcollaboratorsMarkedForDeletion((prevMarked) => [
-      ...prevMarked,
-      collaborator,
-    ]);
+  const handleMarkCollaborators = (collaborator) => {
+    setmarkedCollaborators((prevMarked) => [...prevMarked, collaborator]);
     handleCollaboratorsToggleSelection(collaborator);
   };
 
   const handleCollaboratorsUndoSelection = (collaborator) => {
-    setcollaboratorsMarkedForDeletion((prevMarked) =>
+    setmarkedCollaborators((prevMarked) =>
       prevMarked.filter((c) => c !== collaborator)
     );
     handleCollaboratorsToggleSelection(collaborator);
@@ -102,19 +96,46 @@ const TaskDetails = () => {
     }
   };
 
-  const handleUsersToInviteMarkForRemoval = (userToInvite) => {
-    setUsersToInviteMarkedForDeletion((prevMarked) => [
-      ...prevMarked,
-      userToInvite,
-    ]);
+  const handleMarkUsersToInvite = (userToInvite) => {
+    setmarkedUsersToInvite((prevMarked) => [...prevMarked, userToInvite]);
     handleUsersToInviteToggleSelection(userToInvite);
   };
 
   const handleUsersToInviteUndoSelection = (userToInvite) => {
-    setUsersToInviteMarkedForDeletion((prevMarked) =>
+    setmarkedUsersToInvite((prevMarked) =>
       prevMarked.filter((c) => c !== userToInvite)
     );
     handleUsersToInviteToggleSelection(userToInvite);
+  };
+
+  // Pending Invitations
+
+  const handlePendingInvitationsToggleSelection = (PendingInvitation) => {
+    if (selectedPendingInvitations.includes(PendingInvitation)) {
+      setSelectedPendingInvitations((prevSelected) =>
+        prevSelected.filter((c) => c !== PendingInvitation)
+      );
+    } else {
+      setSelectedPendingInvitations((prevSelected) => [
+        ...prevSelected,
+        PendingInvitation,
+      ]);
+    }
+  };
+
+  const handleMarkPendingInvitations = (PendingInvitation) => {
+    setMarkedPendingInvitations((prevMarked) => [
+      ...prevMarked,
+      PendingInvitation,
+    ]);
+    handlePendingInvitationsToggleSelection(PendingInvitation);
+  };
+
+  const handlePendingInvitationsUndoSelection = (PendingInvitation) => {
+    setMarkedPendingInvitations((prevMarked) =>
+      prevMarked.filter((c) => c !== PendingInvitation)
+    );
+    handlePendingInvitationsToggleSelection(PendingInvitation);
   };
 
   const handleChange = (event) => {
@@ -158,32 +179,49 @@ const TaskDetails = () => {
     // Only save the dirty fields
     const updatedFormData = {};
     dirtyFields.forEach((field) => {
-      // Convert the status value to boolean
-      if (field === "status") {
-        updatedFormData[field] = formData[field] === "true";
-      } else {
-        updatedFormData[field] = formData[field];
-      }
+      updatedFormData[field] = formData[field];
     });
+
     return updatedFormData;
   }
 
   const handleSave = async () => {
-    console.log(
-      "Collaborators Marked for deletion:",
-      collaboratorsMarkedForDeletion
-    );
-    console.log(
-      "Users to invite Marked for deletion:",
-      usersToInviteMarkedForDeletion
-    );
-    // const updatedFormData = getFormData();
-    // // TODO: check if form data is empty before saving
-    // // console.log(formData);
-    // setIsLoading(true);
-    // await taskService.updateTask(updatedFormData, taskId, 1);
-    // setIsLoading(false);
-    // navigate(`/tasks/${taskId}`);
+    const updatedFormData = getFormData();
+    if (
+      !markedCollaborators.length &&
+      !markedPendingInvitations.length &&
+      !markedUsersToInvite.length &&
+      !Object.keys(updatedFormData).length
+    ) {
+      // If no field has chaged
+      alert("Nothing Changed!");
+    } else {
+      setIsLoading(true);
+
+      if (markedCollaborators.length) {
+        console.log("Collaborators: ", markedCollaborators);
+      }
+
+      if (markedPendingInvitations.length) {
+        console.log("Pending Invitations:", markedPendingInvitations);
+      }
+
+      if (markedUsersToInvite.length) {
+        console.log("Users to invite: ", markedUsersToInvite);
+      }
+
+      if (Object.keys(updatedFormData).length) {
+        // Convert isCompleted to boolean
+        updatedFormData.isCompleted = JSON.parse(updatedFormData.isCompleted);
+        // updatedFormData.isCompleted = updatedFormData.isCompleted === "true";
+
+        // console.log("Form Data: ", updatedFormData);
+        await taskService.updateTask(updatedFormData, taskId, 1);
+      }
+
+      setIsLoading(false);
+      navigate(`/tasks/${taskId}`);
+    }
   };
 
   const childContext = {
@@ -193,15 +231,17 @@ const TaskDetails = () => {
     pendingInvitations,
     selectedUsersToInvite,
     selectedCollaborators,
+    selectedPendingInvitations,
     handleInvite,
     setMode,
     setTitle,
     handleChange,
     handleCollaboratorsUndoSelection,
-    handleCollaboratorsMarkForRemoval,
-    handleUsersToInviteToggleSelection,
-    handleUsersToInviteMarkForRemoval,
+    handleMarkCollaborators,
+    handleMarkUsersToInvite,
     handleUsersToInviteUndoSelection,
+    handleMarkPendingInvitations,
+    handlePendingInvitationsUndoSelection,
   };
 
   return (
