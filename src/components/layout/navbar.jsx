@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const taskService = require("../service/task-service");
+const taskService = require("../../services/task-service");
 
 const Navbar = () => {
   const [allTasks, setAllTasks] = useState(0);

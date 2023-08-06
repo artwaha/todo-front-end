@@ -8,7 +8,6 @@ const ViewMode = () => {
     collaborators,
     usersToInvite,
     pendingInvitations,
-    handleInvite,
     setMode,
   } = useOutletContext();
 

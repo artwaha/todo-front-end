@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
-import SEO from "../layout/seo";
-import Title from "../layout/title";
-const taskService = require("../service/task-service");
-const collaboratorService = require("../service/collaborator-service");
-const userService = require("../service/user-service");
+import SEO from "../components/layout/seo";
+import Title from "../components/layout/title";
+const taskService = require("../services/task-service");
+const collaboratorService = require("../services/collaborator-service");
+const userService = require("../services/user-service");
 
 const TaskDetails = () => {
   // React Router Variables

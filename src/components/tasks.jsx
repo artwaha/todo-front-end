@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import TaskItem from "./task-item";
-import SEO from "../layout/seo";
-import Title from "../layout/title";
-const taskService = require("../service/task-service");
+import SEO from "../components/layout/seo";
+import Title from "../components/layout/title";
+const taskService = require("../services/task-service");
 
 const Tasks = ({ location }) => {
   const [tasks, setTasks] = useState([]);

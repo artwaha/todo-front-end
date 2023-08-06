@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import ErrorPage from "./layout/error-page";
-import Tasks from "./component/tasks";
+import ErrorPage from "./components/layout/error-page";
+import Tasks from "./components/tasks";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import TaskDetails from "./component/task-details";
-import ViewMode from "./component/view-mode";
-import EditMode from "./component/edit-mode";
+import TaskDetails from "./components/task-details";
+import ViewMode from "./components/view-mode";
+import EditMode from "./components/edit-mode";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
