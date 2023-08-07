@@ -189,7 +189,6 @@ const TaskDetails = () => {
       setIsLoading(true);
       // TODO: Handle Multiple
       if (markedCollaborators.length) {
-        // console.log(markedCollaborators);
         const collaborator = {
           userId: markedCollaborators[0].user.id,
           taskId: markedCollaborators[0].task.id,
@@ -198,6 +197,12 @@ const TaskDetails = () => {
       }
 
       if (markedPendingInvitations.length) {
+        // const usersToInvite = markedUsersToInvite.map((markedUser) => ({
+        //   userId: markedUser.id,
+        //   taskId: Number(taskId),
+        // }));
+        // console.log(usersToInvite);
+
         const invitation = {
           userId: markedPendingInvitations[0].id,
           taskId,
@@ -207,17 +212,18 @@ const TaskDetails = () => {
       }
 
       if (markedUsersToInvite.length) {
-        const results = markedUsersToInvite.forEach((markedUser) => ({
-          userId: markedUser.id,
-          taskId,
-        }));
-        console.log(results);
-        // const userToInvite = {
-        //   userId: markedUsersToInvite[0].id,
-        //   taskId,
-        // };
+        // const usersToInvite = markedUsersToInvite.map((markedUser) => ({
+        //   userId: markedUser.id,
+        //   taskId: Number(taskId),
+        // }));
+        // console.log(usersToInvite);
 
-        // await collaboratorService.inviteUser(userToInvite);
+        const userToInvite = {
+          userId: markedUsersToInvite[0].id,
+          taskId,
+        };
+
+        await collaboratorService.inviteUser(userToInvite);
       }
 
       if (Object.keys(updatedFormData).length) {
