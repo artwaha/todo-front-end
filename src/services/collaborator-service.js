@@ -21,3 +21,21 @@ export const inviteUser = async (data) => {
     console.error(error);
   }
 };
+
+export const removeCollaborator = async (collaborator) => {
+  try {
+    const response = await axios.patch(`${BASE_URL}/remove`, collaborator);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const removePendingInvitation = async (invitation) => {
+  try {
+    const response = await axios.patch(`${BASE_URL}/pending-invitation/remove`, invitation);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

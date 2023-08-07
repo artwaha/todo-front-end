@@ -55,7 +55,6 @@ const TaskDetails = () => {
   }, [taskId, isLoading]);
 
   // Collaborators
-
   const handleCollaboratorsToggleSelection = (collaborator) => {
     if (selectedCollaborators.includes(collaborator)) {
       setSelectedCollaborators((prevSelected) =>
@@ -82,7 +81,6 @@ const TaskDetails = () => {
   };
 
   // Users to Invite
-
   const handleUsersToInviteToggleSelection = (userToInvite) => {
     if (selectedUsersToInvite.includes(userToInvite)) {
       setSelectedUsersToInvite((prevSelected) =>
@@ -109,7 +107,6 @@ const TaskDetails = () => {
   };
 
   // Pending Invitations
-
   const handlePendingInvitationsToggleSelection = (PendingInvitation) => {
     if (selectedPendingInvitations.includes(PendingInvitation)) {
       setSelectedPendingInvitations((prevSelected) =>
@@ -148,17 +145,6 @@ const TaskDetails = () => {
     });
   };
 
-  async function handleInvite(user) {
-    try {
-      setIsLoading(true);
-      await collaboratorService.inviteUser({ userId: user.id, taskId: taskId });
-      // To refresh component
-      setIsLoading(false);
-    } catch (error) {
-      console.error({ layer: "VIEW", error });
-    }
-  }
-
   const handleChangeMode = (e) => {
     switch (e.target.value) {
       case "edit":
@@ -182,6 +168,10 @@ const TaskDetails = () => {
       updatedFormData[field] = formData[field];
     });
 
+    if (updatedFormData.isCompleted) {
+      updatedFormData.isCompleted = updatedFormData.isCompleted === "true";
+    }
+
     return updatedFormData;
   }
 
@@ -197,25 +187,34 @@ const TaskDetails = () => {
       alert("Nothing Changed!");
     } else {
       setIsLoading(true);
-
+      // TODO: Handle Multiple
       if (markedCollaborators.length) {
-        console.log("Collaborators: ", markedCollaborators);
+        const collaborator = {
+          userId: markedCollaborators[0].user.id,
+          taskId: markedCollaborators[0].task.id,
+        };
+        await collaboratorService.removeCollaborator(collaborator);
       }
 
       if (markedPendingInvitations.length) {
-        console.log("Pending Invitations:", markedPendingInvitations);
+        const invitation = {
+          userId: markedPendingInvitations[0].id,
+          taskId,
+        };
+
+        await collaboratorService.removePendingInvitation(invitation);
       }
 
       if (markedUsersToInvite.length) {
-        console.log("Users to invite: ", markedUsersToInvite);
+        const userToInvite = {
+          userId: markedUsersToInvite[0].id,
+          taskId,
+        };
+
+        await collaboratorService.inviteUser(userToInvite);
       }
 
       if (Object.keys(updatedFormData).length) {
-        // Convert isCompleted to boolean
-        updatedFormData.isCompleted = JSON.parse(updatedFormData.isCompleted);
-        // updatedFormData.isCompleted = updatedFormData.isCompleted === "true";
-
-        // console.log("Form Data: ", updatedFormData);
         await taskService.updateTask(updatedFormData, taskId, 1);
       }
 
@@ -232,7 +231,6 @@ const TaskDetails = () => {
     selectedUsersToInvite,
     selectedCollaborators,
     selectedPendingInvitations,
-    handleInvite,
     setMode,
     setTitle,
     handleChange,
@@ -242,6 +240,7 @@ const TaskDetails = () => {
     handleUsersToInviteUndoSelection,
     handleMarkPendingInvitations,
     handlePendingInvitationsUndoSelection,
+    setFormData,
   };
 
   return (

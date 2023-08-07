@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router-dom";
 
 const EditMode = () => {
   const {
+    setFormData,
     task,
     setTitle,
     collaborators,
@@ -24,7 +25,12 @@ const EditMode = () => {
   useEffect(() => {
     setTitle("Edit Task");
     setMode("edit");
-  }, [setMode, setTitle]);
+
+    return () => {
+      // Rset formData
+      setFormData({});
+    };
+  }, [setFormData, setMode, setTitle]);
 
   return <>{taskDetails()}</>;
 
