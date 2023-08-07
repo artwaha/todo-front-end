@@ -189,6 +189,7 @@ const TaskDetails = () => {
       setIsLoading(true);
       // TODO: Handle Multiple
       if (markedCollaborators.length) {
+        // console.log(markedCollaborators);
         const collaborator = {
           userId: markedCollaborators[0].user.id,
           taskId: markedCollaborators[0].task.id,
@@ -206,12 +207,17 @@ const TaskDetails = () => {
       }
 
       if (markedUsersToInvite.length) {
-        const userToInvite = {
-          userId: markedUsersToInvite[0].id,
+        const results = markedUsersToInvite.forEach((markedUser) => ({
+          userId: markedUser.id,
           taskId,
-        };
+        }));
+        console.log(results);
+        // const userToInvite = {
+        //   userId: markedUsersToInvite[0].id,
+        //   taskId,
+        // };
 
-        await collaboratorService.inviteUser(userToInvite);
+        // await collaboratorService.inviteUser(userToInvite);
       }
 
       if (Object.keys(updatedFormData).length) {
