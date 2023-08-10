@@ -1,6 +1,15 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:8080/api/v1/tasks";
 
+export const getInvitations = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/users/${userId}/invitations`);
+    return response.data;
+  } catch (error) {
+    console.error({ layer: "SERVICE", error });
+  }
+};
+
 export const getAllTasks = async (userId) => {
   try {
     const response = await axios.get(`${BASE_URL}/users/${userId}`);

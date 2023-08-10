@@ -15,6 +15,7 @@ const Navbar = () => {
         setAllTasks(count.all);
         setDoneTasks(count.done);
         setPendingTasks(count.pending);
+        setInvitations(count.invitations);
       } catch (error) {
         console.error({ layer: "VIEW", error });
       }

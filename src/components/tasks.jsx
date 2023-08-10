@@ -21,7 +21,7 @@ const Tasks = ({ location }) => {
           break;
         case "invitations":
           setTitle("Invitations");
-          setTasks(await taskService.getPendingTasks(1));
+          setTasks(await taskService.getInvitations(1));
           break;
         default:
           setTitle("All Tasks (Completed & Pending)");
