@@ -15,7 +15,7 @@ export const getTaskCollaborators = async (userId, taskId) => {
 
 export const inviteUser = async (usersToInvite) => {
   try {
-    const response = await axios.post(`${BASE_URL}/invite`, usersToInvite);
+    const response = await axios.patch(`${BASE_URL}/invite`, usersToInvite);
     return response.data;
     // console.log(usersToInvite);
   } catch (error) {
