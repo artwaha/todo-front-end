@@ -19,8 +19,12 @@ const Tasks = ({ location }) => {
           setTitle("Pending Tasks");
           setTasks(await taskService.getPendingTasks(1));
           break;
+        case "invitations":
+          setTitle("Invitations");
+          setTasks(await taskService.getPendingTasks(1));
+          break;
         default:
-          setTitle("All Tasks");
+          setTitle("All Tasks (Completed & Pending)");
           setTasks(await taskService.getAllTasks(1));
           break;
       }
@@ -54,6 +58,8 @@ const Tasks = ({ location }) => {
       return <SEO title="Done Tasks" description="Done Tasks" />;
     } else if (location === "Pending") {
       return <SEO title="Pending Tasks" description="Pending Tasks" />;
+    } else if (location === "invitations") {
+      return <SEO title="Invitations" description="Invitations" />;
     } else {
       return <SEO title="All Tasks" description="All Tasks" />;
     }
