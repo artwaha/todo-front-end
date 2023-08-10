@@ -34,6 +34,10 @@ const router = createBrowserRouter([
         element: <Tasks location="Pending" />,
       },
       {
+        path: "invitations",
+        element: <Tasks location="invitations" />,
+      },
+      {
         path: "/tasks/:taskId",
         element: <TaskDetails />,
         children: [

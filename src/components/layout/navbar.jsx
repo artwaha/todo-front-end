@@ -6,6 +6,7 @@ const Navbar = () => {
   const [allTasks, setAllTasks] = useState(0);
   const [doneTasks, setDoneTasks] = useState(0);
   const [pendingTasks, setPendingTasks] = useState(0);
+  const [invitations, setInvitations] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -46,6 +47,14 @@ const Navbar = () => {
             className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold shadow-md transition duration-300 ease-in-out"
           >
             Pending({pendingTasks})
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="pending"
+            className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold shadow-md transition duration-300 ease-in-out"
+          >
+            Invitations({invitations})
           </Link>
         </li>
       </ul>
