@@ -13,28 +13,34 @@ export const getTaskCollaborators = async (userId, taskId) => {
   }
 };
 
-export const inviteUser = async (data) => {
+export const inviteUser = async (usersToInvite) => {
   try {
-    const response = await axios.post(`${BASE_URL}`, data);
+    const response = await axios.post(`${BASE_URL}/invite`, usersToInvite);
     return response.data;
+    // console.log(usersToInvite);
   } catch (error) {
     console.error(error);
   }
 };
 
-export const removeCollaborator = async (collaborator) => {
+export const removeCollaborator = async (collaborators) => {
   try {
-    const response = await axios.patch(`${BASE_URL}/remove`, collaborator);
+    const response = await axios.patch(`${BASE_URL}/remove`, collaborators);
     return response.data;
+    // console.log(collaborators);
   } catch (error) {
     console.error(error);
   }
 };
 
-export const removePendingInvitation = async (invitation) => {
+export const removePendingInvitation = async (pendingInvitations) => {
   try {
-    const response = await axios.patch(`${BASE_URL}/pending-invitation/remove`, invitation);
+    const response = await axios.patch(
+      `${BASE_URL}/pending-invitation/remove`,
+      pendingInvitations
+    );
     return response.data;
+    // console.log(pendingInvitations);
   } catch (error) {
     console.error(error);
   }

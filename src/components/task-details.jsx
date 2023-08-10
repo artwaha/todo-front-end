@@ -187,43 +187,33 @@ const TaskDetails = () => {
       alert("Nothing Changed!");
     } else {
       setIsLoading(true);
-      // TODO: Handle Multiple
       if (markedCollaborators.length) {
-        const collaborator = {
-          userId: markedCollaborators[0].user.id,
-          taskId: markedCollaborators[0].task.id,
-        };
-        await collaboratorService.removeCollaborator(collaborator);
+        const _collaborators = markedCollaborators.map((_collaborator) => ({
+          userId: _collaborator.user.id,
+          taskId: Number(taskId),
+        }));
+
+        await collaboratorService.removeCollaborator(_collaborators);
       }
 
       if (markedPendingInvitations.length) {
-        // const usersToInvite = markedUsersToInvite.map((markedUser) => ({
-        //   userId: markedUser.id,
-        //   taskId: Number(taskId),
-        // }));
-        // console.log(usersToInvite);
+        const pendingInvitations = markedPendingInvitations.map(
+          (pendingInvitation) => ({
+            userId: pendingInvitation.id,
+            taskId: Number(taskId),
+          })
+        );
 
-        const invitation = {
-          userId: markedPendingInvitations[0].id,
-          taskId,
-        };
-
-        await collaboratorService.removePendingInvitation(invitation);
+        await collaboratorService.removePendingInvitation(pendingInvitations);
       }
 
       if (markedUsersToInvite.length) {
-        // const usersToInvite = markedUsersToInvite.map((markedUser) => ({
-        //   userId: markedUser.id,
-        //   taskId: Number(taskId),
-        // }));
-        // console.log(usersToInvite);
+        const usersToInvite = markedUsersToInvite.map((markedUser) => ({
+          userId: markedUser.id,
+          taskId: Number(taskId),
+        }));
 
-        const userToInvite = {
-          userId: markedUsersToInvite[0].id,
-          taskId,
-        };
-
-        await collaboratorService.inviteUser(userToInvite);
+        await collaboratorService.inviteUser(usersToInvite);
       }
 
       if (Object.keys(updatedFormData).length) {
