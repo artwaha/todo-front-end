@@ -9,6 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 import TaskDetails from "./components/task-details";
 import ViewMode from "./components/view-mode";
 import EditMode from "./components/edit-mode";
+import Invitations from "./components/invitations";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: "invitations",
-        element: <Tasks location="invitations" />,
+        element: <Invitations />,
       },
       {
         path: "/tasks/:taskId",
