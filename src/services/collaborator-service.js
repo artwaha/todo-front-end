@@ -13,6 +13,16 @@ export const getTaskCollaborators = async (userId, taskId) => {
   }
 };
 
+export const addCollaborators = async (collaborator) => {
+  try {
+    const response = await axios.post(`${BASE_URL}`, collaborator);
+    return response.data;
+    // console.log(usersToInvite);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const inviteUser = async (usersToInvite) => {
   try {
     const response = await axios.patch(`${BASE_URL}/invite`, usersToInvite);

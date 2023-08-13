@@ -8,7 +8,7 @@ const TaskItem = ({ task }) => {
 
   return (
     <small
-      className="grid border p-2 mt-3"
+      className="grid border p-2 mt-3 hover:border-gray-400"
       style={{ gridTemplateColumns: "1fr 2fr 1fr 1fr" }}
     >
       <p>{task.id}</p>

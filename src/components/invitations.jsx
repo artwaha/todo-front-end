@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SEO from "./layout/seo";
 import Invitation from "./invitation";
+// import { getInvitations } from "../services/task-service";
+const taskService = require("../services/task-service");
 
 const Invitations = () => {
+  const [invitations, setInvitations] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      // console.log(await taskService.getInvitations(1));
+      setInvitations(await taskService.getInvitations(1));
+    }
+    fetchData();
+  }, []);
+
   return (
     <div>
       <SEO title="Invitations" description="Invitations" />
       {titleBar()}
-      <Invitation />
+
+      {invitations.length <= 0 ? (
+        <div> No Invitations</div>
+      ) : (
+        invitations.map((invitation, index) => (
+          <Invitation key={index} invitation={invitation} />
+        ))
+      )}
     </div>
   );
 };
