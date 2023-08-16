@@ -10,6 +10,7 @@ const Tasks = ({ location }) => {
 
   useEffect(() => {
     async function fetchData() {
+      // console.log("Component rendered - tasks");
       switch (location) {
         case "Done":
           setTitle("Done Tasks");

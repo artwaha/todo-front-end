@@ -10,6 +10,7 @@ import TaskDetails from "./components/task-details";
 import ViewMode from "./components/view-mode";
 import EditMode from "./components/edit-mode";
 import Invitations from "./components/invitations";
+import NewNav from "./components/new-nav";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       {
         path: "invitations",
         element: <Invitations />,
+        // element: <NewNav />,
       },
       {
         path: "/tasks/:taskId",
@@ -56,9 +58,9 @@ const router = createBrowserRouter([
   },
 ]);
 root.render(
-  <RouterProvider router={router} />
   // <React.StrictMode>
-  //     <App />
+  <RouterProvider router={router} />
+
   // </React.StrictMode>
 );
 

@@ -37,6 +37,7 @@ const TaskDetails = () => {
 
   useEffect(() => {
     async function fetchData() {
+      console.log("Task Details");
       try {
         setTask(await taskService.getTaskDetails(taskId, 1));
         setCollaborators(
@@ -186,7 +187,6 @@ const TaskDetails = () => {
       // If no field has chaged
       alert("Nothing Changed!");
     } else {
-      setIsLoading(true);
       if (markedCollaborators.length) {
         const _collaborators = markedCollaborators.map((_collaborator) => ({
           userId: _collaborator.user.id,
@@ -220,7 +220,7 @@ const TaskDetails = () => {
         await taskService.updateTask(updatedFormData, taskId, 1);
       }
 
-      setIsLoading(false);
+      setIsLoading(true);
       navigate(`/tasks/${taskId}`);
     }
   };

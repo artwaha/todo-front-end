@@ -13,7 +13,7 @@ export const getTaskCollaborators = async (userId, taskId) => {
   }
 };
 
-export const addCollaborators = async (collaborator) => {
+export const addCollaborator = async (collaborator) => {
   try {
     const response = await axios.post(`${BASE_URL}`, collaborator);
     return response.data;

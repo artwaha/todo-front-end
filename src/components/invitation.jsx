@@ -1,14 +1,6 @@
 import React from "react";
 
-const Invitation = ({ invitation }) => {
-  const handleReject = async () => {
-    console.log("Reject");
-  };
-
-  const handleAccept = async () => {
-    console.log("Accept");
-  };
-
+const Invitation = ({ invitation, handleAccept, handleReject }) => {
   return (
     <small
       className="grid border p-2 mt-3 hover:border-gray-400"
@@ -19,7 +11,7 @@ const Invitation = ({ invitation }) => {
       <div className="mx-auto grid grid-cols-2 gap-2">
         <button
           className="flex items-center justify-center"
-          onClick={handleAccept}
+          onClick={() => handleAccept(invitation)}
         >
           <svg
             viewBox="0 0 665.8 1000"
@@ -33,7 +25,7 @@ const Invitation = ({ invitation }) => {
         </button>
         <button
           className="flex items-center justify-center"
-          onClick={handleReject}
+          onClick={() => handleReject(invitation)}
         >
           <svg
             viewBox="0 0 16 16"

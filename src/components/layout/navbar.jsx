@@ -1,30 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { NavStateContext } from "../../App";
 const taskService = require("../../services/task-service");
 
 const Navbar = () => {
+  const { setRefreshNav } = useContext(NavStateContext);
   const [allTasks, setAllTasks] = useState(0);
   const [doneTasks, setDoneTasks] = useState(0);
   const [pendingTasks, setPendingTasks] = useState(0);
   const [invitations, setInvitations] = useState(0);
-
   useEffect(() => {
     async function fetchData() {
       try {
+        console.log("Render Navigation");
         const count = await taskService.countTasks();
         setAllTasks(count.all);
         setDoneTasks(count.done);
         setPendingTasks(count.pending);
         setInvitations(count.invitations);
+        setRefreshNav(false);
       } catch (error) {
         console.error({ layer: "VIEW", error });
       }
     }
     fetchData();
-  }, []);
+  }, [setRefreshNav]);
 
   return (
     <nav className="p-4">
+      {/* {!refreshNav && ( */}
       <ul className="flex justify-around text-xs">
         <li>
           <Link
@@ -59,6 +63,7 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
+      {/* )} */}
     </nav>
   );
 };
