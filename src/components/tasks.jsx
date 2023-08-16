@@ -10,7 +10,7 @@ const Tasks = ({ location }) => {
 
   useEffect(() => {
     async function fetchData() {
-      // console.log("Component rendered - tasks");
+      // Refresh the Navbar
       switch (location) {
         case "Done":
           setTitle("Done Tasks");

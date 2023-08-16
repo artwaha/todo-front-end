@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import SEO from "./layout/seo";
 import Invitation from "./invitation";
-import { NavStateContext } from "../App";
-import { useContext } from "react";
+import { useOutletContext } from "react-router-dom";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
 
 const Invitations = () => {
-  const { setRefreshNav } = useContext(NavStateContext);
   const [invitations, setInvitations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const { fetchDataNavBar } = useOutletContext();
+
   useEffect(() => {
-    console.log("Render Invitations");
-    async function fetchData() {
-      setInvitations(await taskService.getInvitations(1));
-      setIsLoading(false);
-    }
-    fetchData();
-  }, [isLoading]);
+    // console.log("Loading Invitations Component");
+    fetchDataInvitations();
+  }, []);
+
+  async function fetchDataInvitations() {
+    setIsLoading(true);
+    setInvitations(await taskService.getInvitations(1));
+    setIsLoading(false);
+  }
 
   const handleReject = async (data) => {
     console.log(data);
@@ -27,8 +29,9 @@ const Invitations = () => {
   const handleAccept = async (data) => {
     const collaborator = { userId: 1, taskId: data.id };
     await collaboratorService.addCollaborator(collaborator);
-    setIsLoading(true);
-    setRefreshNav(true);
+    // Refresh/reload the component(s)
+    fetchDataInvitations();
+    fetchDataNavBar();
   };
 
   return (
