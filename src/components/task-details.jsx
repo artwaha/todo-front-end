@@ -308,8 +308,8 @@ const TaskDetails = () => {
 
   function backButton() {
     return (
-      <Link
-        to="/tasks"
+      <button
+        onClick={() => navigate(-1)}
         className="mr-auto text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
       >
         <svg
@@ -327,7 +327,7 @@ const TaskDetails = () => {
           />
         </svg>
         Back
-      </Link>
+      </button>
     );
   }
 };

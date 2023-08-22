@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-import TaskItem from "./task-item";
 import SEO from "../components/layout/seo";
-import Title from "../components/layout/title";
+import TaskItem from "./task-item";
+import Navbar from "./layout/navbar";
 const taskService = require("../services/task-service");
 
 const Tasks = ({ location }) => {
   const [tasks, setTasks] = useState([]);
-  const [title, setTitle] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       // Refresh the Navbar
       switch (location) {
         case "Done":
-          setTitle("Done Tasks");
           setTasks(await taskService.getDoneTasks(1));
           break;
         case "Pending":
-          setTitle("Pending Tasks");
           setTasks(await taskService.getPendingTasks(1));
           break;
         default:
-          setTitle("All Tasks (Completed & Pending)");
           setTasks(await taskService.getAllTasks(1));
           break;
       }
@@ -31,8 +27,8 @@ const Tasks = ({ location }) => {
 
   return (
     <>
-      <Title title={title} />
       {seo()}
+      {/* <hr /> */}
       {displayTasks()}
     </>
   );
