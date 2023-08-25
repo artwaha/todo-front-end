@@ -73,11 +73,12 @@ const Tasks = ({ location }) => {
     return (
       <div
         className="grid font-bold p-2"
-        style={{ gridTemplateColumns: "1fr 2fr 1fr 1fr" }}
+        style={{ gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr" }}
       >
         <p className="">#</p>
         <p>Title</p>
         <p className="mx-auto">Priority </p>
+        <p className="mx-auto">Status </p>
       </div>
     );
   }

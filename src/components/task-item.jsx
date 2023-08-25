@@ -9,12 +9,17 @@ const TaskItem = ({ task }) => {
   return (
     <small
       className="grid border p-2 mt-3 hover:border-gray-400"
-      style={{ gridTemplateColumns: "1fr 2fr 1fr 1fr" }}
+      style={{ gridTemplateColumns: "1fr 2fr 1fr 1fr 1fr" }}
     >
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p className="mx-auto">
         <span className={styles}>{task.priority}</span>
+      </p>
+      <p className="mx-auto">
+        <span className="uppercase px-2 py-1 font-mono rounded-full text-white bg-orange-500">
+          {task.isCompleted ? "Completed" : "Pending"}
+        </span>
       </p>
       <Link to={`/tasks/${task.id}`} className="ml-auto">
         {/* <Link to={`/tasks/333`} className="ml-auto"> */}
