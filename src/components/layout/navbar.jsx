@@ -46,7 +46,7 @@ const Navbar = ({
   };
 
   return (
-    <nav className="p-4 mx-auto">
+    <nav className="p-4 mx-auto ">
       {!isLoadingNavBar && (
         <div className="flex">
           <Link

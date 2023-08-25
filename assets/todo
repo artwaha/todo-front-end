@@ -1,7 +1,4 @@
-TODO 1: Return empty object when API call fails (in the Services). Use Response Status codes
-TODO 2: Handle isLoading to show a temp message when fetching data, but also add error message
+TODO: Handle isLoading to show a temp message when fetching data, but also add error message
 or scenario for when the API call has finished executing, which stops the loading activity of the component
 expecting either to display the data or error message or scenario (e.g checking for length of the object / array)
-TODO 3: Handle when API doesnt function
-TODO 4: Add overflow to app to accomodate scrolling behaviour on small screens
-TODO 5: Handle Reload Behaviour - esp on taskDetails
+

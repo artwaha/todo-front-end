@@ -1,7 +1,7 @@
+import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../src/components/layout/footer";
 import Navbar from "../src/components/layout/navbar";
-import { createContext, useEffect, useState } from "react";
 export const NavStateContext = createContext();
 const taskService = require("./services/task-service");
 
@@ -17,21 +17,17 @@ function App() {
   }, []);
 
   const fetchDataNavBar = async () => {
-    try {
-      setIsLoadingNavBar(true);
-      const count = await taskService.countTasks();
-      setAllTasks(count.all);
-      setDoneTasks(count.done);
-      setPendingTasks(count.pending);
-      setInvitations(count.invitations);
-      setIsLoadingNavBar(false);
-    } catch (error) {
-      console.error({ layer: "VIEW", error });
-    }
+    setIsLoadingNavBar(true);
+    const count = await taskService.countTasks();
+    setAllTasks(count.all);
+    setDoneTasks(count.done);
+    setPendingTasks(count.pending);
+    setInvitations(count.invitations);
+    setIsLoadingNavBar(false);
   };
 
   return (
-    <div className="flex flex-col container mx-auto min-h-screen">
+    <div className="flex flex-col container mx-auto min-h-screen over ">
       <Navbar
         allTasks={allTasks}
         doneTasks={doneTasks}

@@ -14,17 +14,21 @@ const ViewMode = () => {
   useEffect(() => {
     setTitle("Task Details");
     setMode("view");
-  }, [setMode, setTitle]);
+  }, [setMode, setTitle, task]);
 
   return <>{taskDetails(task)}</>;
 
   function taskDetails() {
     return (
       <>
-        <div className="mb-2">
-          <h1 className="text-2xl flex items-center font-semibold">
-            {task.title} <span className={getStyles()}>{task.priority}</span>
-          </h1>
+        <div className="mb-2 flex font-semibold items-center">
+          <h1 className="text-2xl">{task.title}</h1>
+          <div className="ml-2">
+            <span className={getPriorityStyles()}>{task.priority}</span>
+            <span className="uppercase px-2 py-1 ml-2 font-mono rounded-full text-gray-50 bg-orange-400">
+              {task.isCompleted ? "Completed" : "Pending"}
+            </span>
+          </div>
         </div>
         <p className="text-gray-600 text-lg mb-6">{task.description}</p>
 
@@ -92,8 +96,8 @@ const ViewMode = () => {
     );
   }
 
-  function getStyles() {
-    return `px-2 py-1 ml-1 font-mono rounded-full ${
+  function getPriorityStyles() {
+    return `px-2 py-1 font-mono rounded-full ${
       task.priority === "HIGH" ? "text-white bg-[#FF0000]" : "bg-[#00C853]"
     }`;
   }

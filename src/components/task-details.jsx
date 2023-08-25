@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Outlet,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import SEO from "../components/layout/seo";
 import Title from "../components/layout/title";
 const taskService = require("../services/task-service");
@@ -10,6 +15,7 @@ const TaskDetails = () => {
   // React Router Variables
   const navigate = useNavigate();
   const { taskId } = useParams();
+  const { fetchDataNavBar } = useOutletContext();
 
   // Use state variables
   const [mode, setMode] = useState("");
@@ -35,25 +41,24 @@ const TaskDetails = () => {
     priority: "",
   });
 
-  useEffect(() => {
-    async function fetchData() {
-      console.log("Task Details");
-      try {
-        setTask(await taskService.getTaskDetails(taskId, 1));
-        setCollaborators(
-          await collaboratorService.getTaskCollaborators(1, taskId)
-        );
-        setUsersToInvite(await userService.getUsersToInvite(1, taskId));
-        setPendingInvitations(
-          await userService.getPendingInvitations(1, taskId)
-        );
-        setIsLoading(false);
-      } catch (error) {
-        console.error({ layer: "VIEW", error });
-      }
+  const fetchDataTaskDetails = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setTask(await taskService.getTaskDetails(taskId, 1));
+      setCollaborators(
+        await collaboratorService.getTaskCollaborators(1, taskId)
+      );
+      setUsersToInvite(await userService.getUsersToInvite(1, taskId));
+      setPendingInvitations(await userService.getPendingInvitations(1, taskId));
+      setIsLoading(false);
+    } catch (error) {
+      console.error({ layer: "VIEW", error });
     }
-    fetchData();
-  }, [taskId, isLoading]);
+  }, [taskId]);
+
+  useEffect(() => {
+    fetchDataTaskDetails();
+  }, [fetchDataTaskDetails]);
 
   // Collaborators
   const handleCollaboratorsToggleSelection = (collaborator) => {
@@ -187,6 +192,8 @@ const TaskDetails = () => {
       // If no field has chaged
       alert("Nothing Changed!");
     } else {
+      // setIsLoading(true);
+
       if (markedCollaborators.length) {
         const _collaborators = markedCollaborators.map((_collaborator) => ({
           userId: _collaborator.user.id,
@@ -217,10 +224,15 @@ const TaskDetails = () => {
       }
 
       if (Object.keys(updatedFormData).length) {
-        await taskService.updateTask(updatedFormData, taskId, 1);
+        await taskService.updateTask(updatedFormData, taskId, 100);
       }
 
-      setIsLoading(true);
+      // Refresh Task details
+      fetchDataTaskDetails();
+
+      // Refresh Navbar
+      fetchDataNavBar();
+      // setIsLoading(false);
       navigate(`/tasks/${taskId}`);
     }
   };
@@ -248,8 +260,6 @@ const TaskDetails = () => {
   return (
     <>
       <SEO title="Task Details" description="Task Details" />
-      <Title title={title} />
-      {controlButtons()}
       {renderOutlet()}
     </>
   );
@@ -261,7 +271,13 @@ const TaskDetails = () => {
       if (Object.keys(task).length <= 0) {
         return <div>No Task details found</div>;
       } else {
-        return <Outlet context={childContext} />;
+        return (
+          <div>
+            <Title title={title} />
+            {controlButtons()}
+            <Outlet context={childContext} />
+          </div>
+        );
       }
     }
   }
@@ -281,7 +297,7 @@ const TaskDetails = () => {
       <select
         onChange={handleChangeMode}
         value={mode}
-        className="outline-none mr-2 text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+        className="outline-none text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
       >
         <option value="view" className="text-black">
           View Mode

@@ -6,10 +6,10 @@ export const getTaskCollaborators = async (userId, taskId) => {
     const response = await axios.get(
       `${BASE_URL}/tasks/${taskId}/users/${userId}`
     );
-
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error({ layer: "SERVICE", error: error.message });
+    return [];
   }
 };
 
@@ -19,7 +19,8 @@ export const addCollaborator = async (collaborator) => {
     return response.data;
     // console.log(usersToInvite);
   } catch (error) {
-    console.error(error);
+    console.log({ layer: "SERVICE", error: error.message });
+    return {};
   }
 };
 
@@ -29,7 +30,8 @@ export const inviteUser = async (usersToInvite) => {
     return response.data;
     // console.log(usersToInvite);
   } catch (error) {
-    console.error(error);
+    console.log({ layer: "SERVICE", error: error.message });
+    return {};
   }
 };
 
@@ -39,7 +41,8 @@ export const removeCollaborator = async (collaborators) => {
     return response.data;
     // console.log(collaborators);
   } catch (error) {
-    console.error(error);
+    console.log({ layer: "SERVICE", error: error.message });
+    return {};
   }
 };
 
@@ -52,6 +55,7 @@ export const removePendingInvitation = async (pendingInvitations) => {
     return response.data;
     // console.log(pendingInvitations);
   } catch (error) {
-    console.error(error);
+    console.log({ layer: "SERVICE", error: error.message });
+    return {};
   }
 };

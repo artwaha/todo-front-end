@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SEO from "../components/layout/seo";
 import TaskItem from "./task-item";
-import Navbar from "./layout/navbar";
 const taskService = require("../services/task-service");
 
 const Tasks = ({ location }) => {
   const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
+  const fetchDataTasks = useCallback(async () => {
+    try {
       // Refresh the Navbar
+      setIsLoading(true);
       switch (location) {
         case "Done":
           setTasks(await taskService.getDoneTasks(1));
@@ -21,29 +22,39 @@ const Tasks = ({ location }) => {
           setTasks(await taskService.getAllTasks(1));
           break;
       }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(true);
+      console.error({ layer: "VIEW", error: error });
     }
-    fetchData();
   }, [location]);
+
+  useEffect(() => {
+    fetchDataTasks();
+  }, [fetchDataTasks]);
 
   return (
     <>
       {seo()}
-      {/* <hr /> */}
       {displayTasks()}
     </>
   );
 
   function displayTasks() {
-    return tasks.length <= 0 ? (
-      <div>No {location !== "All" && location} Tasks</div>
-    ) : (
-      <>
-        {titleBar()}
-        {tasks.map((task, index) => (
-          <TaskItem task={task} key={index} />
-        ))}
-      </>
-    );
+    if (isLoading) {
+      return <div>Loading</div>;
+    } else {
+      return tasks.length <= 0 ? (
+        <div>No {location !== "All" && location} Tasks</div>
+      ) : (
+        <>
+          {titleBar()}
+          {tasks.map((task, index) => (
+            <TaskItem task={task} key={index} />
+          ))}
+        </>
+      );
+    }
   }
 
   function seo() {

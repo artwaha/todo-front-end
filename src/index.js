@@ -13,7 +13,6 @@ import Invitations from "./components/invitations";
 // import NewNav from "./components/new-nav";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
 const router = createBrowserRouter([
   { errorElement: <ErrorPage /> },
   {
