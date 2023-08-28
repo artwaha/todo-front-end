@@ -21,7 +21,11 @@ const TaskItem = ({ task }) => {
         </span>
       </p>
       <p className="mx-auto">
-        <span className="uppercase px-2 py-1 font-mono rounded-full text-white bg-orange-500">
+        <span
+          className={`uppercase px-2 py-1 font-mono rounded-full text-white  ${
+            task.isCompleted ? "bg-blue-700" : "bg-orange-500"
+          } `}
+        >
           {task.isCompleted ? "Completed" : "Pending"}
         </span>
       </p>
