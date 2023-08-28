@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SEO from "./layout/seo";
-import Invitation from "./invitation";
-import RejectItem from "./reject-item";
 import { useOutletContext } from "react-router-dom";
+import SEO from "./layout/seo";
+import RejectItem from "./reject-item";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
 
