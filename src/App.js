@@ -10,6 +10,8 @@ function App() {
   const [doneTasks, setDoneTasks] = useState(0);
   const [pendingTasks, setPendingTasks] = useState(0);
   const [invitations, setInvitations] = useState(0);
+  const [collaboratingTasks, setCollaboratingTasks] = useState(0);
+  const [rejectedTasks, setRejectedTasks] = useState(0);
   const [isLoadingNavBar, setIsLoadingNavBar] = useState(true);
 
   useEffect(() => {
@@ -23,6 +25,8 @@ function App() {
     setDoneTasks(count.done);
     setPendingTasks(count.pending);
     setInvitations(count.invitations);
+    setCollaboratingTasks(count.collaborating);
+    setRejectedTasks(count.rejected);
     setIsLoadingNavBar(false);
   };
 
@@ -33,6 +37,8 @@ function App() {
         doneTasks={doneTasks}
         pendingTasks={pendingTasks}
         invitations={invitations}
+        rejectedTasks={rejectedTasks}
+        collaboratingTasks={collaboratingTasks}
         isLoadingNavBar={isLoadingNavBar}
       />
       <main className="flex-1 p-4 mx-auto w-full max-w-screen-lg">

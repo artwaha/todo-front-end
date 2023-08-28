@@ -1,4 +1,4 @@
 TODO: Handle isLoading to show a temp message when fetching data, but also add error message
 or scenario for when the API call has finished executing, which stops the loading activity of the component
 expecting either to display the data or error message or scenario (e.g checking for length of the object / array)
-
+TODO: Add filter button

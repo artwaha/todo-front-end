@@ -24,8 +24,16 @@ const ViewMode = () => {
         <div className="mb-2 flex font-semibold items-center">
           <h1 className="text-2xl">{task.title}</h1>
           <div className="ml-2">
-            <span className={getPriorityStyles()}>{task.priority}</span>
-            <span className="uppercase px-2 py-1 ml-2 font-mono rounded-full text-gray-50 bg-orange-400">
+            <span
+              className={`px-2 py-1 font-mono rounded-full ${
+                task.priority === "HIGH"
+                  ? "text-white bg-[#FF0000]"
+                  : "text-white  bg-green-600"
+              }`}
+            >
+              {task.priority}
+            </span>
+            <span className="uppercase px-2 py-1 ml-2 font-mono rounded-full text-gray-50 bg-orange-500">
               {task.isCompleted ? "Completed" : "Pending"}
             </span>
           </div>
@@ -94,12 +102,6 @@ const ViewMode = () => {
         )}
       </>
     );
-  }
-
-  function getPriorityStyles() {
-    return `px-2 py-1 font-mono rounded-full ${
-      task.priority === "HIGH" ? "text-white bg-[#FF0000]" : "bg-[#00C853]"
-    }`;
   }
 };
 

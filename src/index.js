@@ -10,6 +10,8 @@ import TaskDetails from "./components/task-details";
 import ViewMode from "./components/view-mode";
 import EditMode from "./components/edit-mode";
 import Invitations from "./components/invitations";
+import Collaborating from "./components/collaborating";
+import Rejected from "./components/rejected";
 // import NewNav from "./components/new-nav";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -35,7 +37,14 @@ const router = createBrowserRouter([
       {
         path: "invitations",
         element: <Invitations />,
-        // element: <NewNav />,
+      },
+      {
+        path: "collaborating",
+        element: <Collaborating />,
+      },
+      {
+        path: "rejected",
+        element: <Rejected />,
       },
       {
         path: "/tasks/:taskId",

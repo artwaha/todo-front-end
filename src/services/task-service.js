@@ -11,6 +11,28 @@ export const getInvitations = async (userId) => {
   }
 };
 
+export const getCollaboratingTasks = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/users/${userId}/collaborating`
+    );
+    return response.data;
+  } catch (error) {
+    console.error({ layer: "SERVICE", error: error.message });
+    return [];
+  }
+};
+
+export const getRejectedTasks = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/users/${userId}/rejected`);
+    return response.data;
+  } catch (error) {
+    console.error({ layer: "SERVICE", error: error.message });
+    return [];
+  }
+};
+
 export const getAllTasks = async (userId) => {
   try {
     // TODO: Change here

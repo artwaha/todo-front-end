@@ -7,6 +7,8 @@ const Navbar = ({
   doneTasks,
   pendingTasks,
   invitations,
+  collaboratingTasks,
+  rejectedTasks,
   isLoadingNavBar,
 }) => {
   const [activeTab, setActiveTab] = useState("");
@@ -18,19 +20,21 @@ const Navbar = ({
     switch (temp) {
       case "":
         setActiveTab("All");
-        localStorage.setItem("active", "All");
         break;
       case "done":
         setActiveTab("Completed");
-        localStorage.setItem("active", "Completed");
         break;
       case "pending":
         setActiveTab("Pending");
-        localStorage.setItem("active", "Pending");
         break;
       case "invitations":
         setActiveTab("Invitations");
-        localStorage.setItem("active", "Invitations");
+        break;
+      case "collaborating":
+        setActiveTab("Collaborating");
+        break;
+      case "rejected":
+        setActiveTab("Rejected");
         break;
       default:
         break;
@@ -87,20 +91,22 @@ const Navbar = ({
             <small>Invitations ({invitations})</small>
           </Link>
           <Link
+            to="collaborating"
             onClick={() => updateActiveTab("Collaborating")}
             className={`border px-4 py-2 text-sm ${
               activeTab === "Collaborating" ? "bg-black text-white" : ""
             } flex justify-center items-center`}
           >
-            <small>Collaborating (2)</small>
+            <small>Collaborating ({collaboratingTasks})</small>
           </Link>
           <Link
+            to="rejected"
             onClick={() => updateActiveTab("Rejected")}
             className={`border px-4 py-2 text-sm ${
               activeTab === "Rejected" ? "bg-black text-white" : ""
             } flex justify-center items-center`}
           >
-            <small>Rejected (3)</small>
+            <small>Rejected ({rejectedTasks})</small>
           </Link>
         </div>
       )}

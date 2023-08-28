@@ -23,7 +23,12 @@ const Invitations = () => {
   }
 
   const handleReject = async (data) => {
-    console.log(data);
+    const collaborator = { userId: 1, taskId: data.id };
+    // API accespts an array
+    await collaboratorService.removeCollaborator([collaborator]);
+    // Refresh/reload the component(s)
+    fetchDataInvitations();
+    fetchDataNavBar();
   };
 
   const handleAccept = async (data) => {

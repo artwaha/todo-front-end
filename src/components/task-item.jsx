@@ -2,10 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const TaskItem = ({ task }) => {
-  const styles = `px-2 py-1 font-mono rounded-full w-fit ${
-    task.priority === "HIGH" ? "text-white bg-[#FF0000]" : "bg-[#00C853]"
-  }`;
-
   return (
     <small
       className="grid border p-2 mt-3 hover:border-gray-400"
@@ -14,7 +10,15 @@ const TaskItem = ({ task }) => {
       <p>{task.id}</p>
       <p>{task.title}</p>
       <p className="mx-auto">
-        <span className={styles}>{task.priority}</span>
+        <span
+          className={`px-2 py-1 font-mono rounded-full w-fit ${
+            task.priority === "HIGH"
+              ? "text-white bg-[#FF0000]"
+              : "text-white bg-green-600"
+          }`}
+        >
+          {task.priority}
+        </span>
       </p>
       <p className="mx-auto">
         <span className="uppercase px-2 py-1 font-mono rounded-full text-white bg-orange-500">
