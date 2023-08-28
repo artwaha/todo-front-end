@@ -80,16 +80,6 @@ const Navbar = ({
           >
             <small>Pending ({pendingTasks})</small>
           </Link>
-
-          <Link
-            to="invitations"
-            onClick={() => updateActiveTab("Invitations")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "Invitations" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>Invitations ({invitations})</small>
-          </Link>
           <Link
             to="collaborating"
             onClick={() => updateActiveTab("Collaborating")}
@@ -98,6 +88,15 @@ const Navbar = ({
             } flex justify-center items-center`}
           >
             <small>Collaborating ({collaboratingTasks})</small>
+          </Link>
+          <Link
+            to="invitations"
+            onClick={() => updateActiveTab("Invitations")}
+            className={`border px-4 py-2 text-sm ${
+              activeTab === "Invitations" ? "bg-black text-white" : ""
+            } flex justify-center items-center`}
+          >
+            <small>Invitations ({invitations})</small>
           </Link>
           <Link
             to="rejected"

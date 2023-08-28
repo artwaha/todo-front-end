@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router-dom";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
 
+
 const Invitations = () => {
   const [invitations, setInvitations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
