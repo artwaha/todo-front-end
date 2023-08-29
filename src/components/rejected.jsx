@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import SEO from "./layout/seo";
 import RejectItem from "./reject-item";
+import ProgressBar from "./progress-bar";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
 
@@ -52,7 +53,12 @@ const Rejected = () => {
 
   function renderRejectedTasks() {
     if (isLoading) {
-      return <div>Loading</div>;
+      return (
+        <div>
+          Loading
+          <ProgressBar percent={80} />
+        </div>
+      );
     } else {
       return rejectedTasks.length <= 0 ? (
         <div>No Rejected Tasks</div>

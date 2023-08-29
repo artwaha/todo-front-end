@@ -35,7 +35,6 @@ export const getRejectedTasks = async (userId) => {
 
 export const getAllTasks = async (userId) => {
   try {
-    // TODO: Change here
     // const response = await axios.get(`${BASE_URL}/users/${1000}`);
     const response = await axios.get(`${BASE_URL}/users/${userId}`);
     return response.data;
