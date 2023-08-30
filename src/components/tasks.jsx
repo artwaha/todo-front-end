@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import SEO from "../components/layout/seo";
 import TaskItem from "./task-item";
+import SearchBar from "./search-bar";
 const taskService = require("../services/task-service");
 
 const Tasks = ({ location }) => {
@@ -36,6 +37,7 @@ const Tasks = ({ location }) => {
   return (
     <>
       {seo()}
+      <SearchBar tasks={tasks} setTasks={setTasks} />
       {displayTasks()}
     </>
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import SEO from "./layout/seo";
 import RejectItem from "./reject-item";
+import SearchBar from "./search-bar";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
 
@@ -58,6 +59,7 @@ const Rejected = () => {
         <div>No Rejected Tasks</div>
       ) : (
         <div>
+          <SearchBar tasks={rejectedTasks} updateTasks={setRejectedTasks} />
           {titleBar()}
           {rejectedTasks.map((task, index) => (
             <RejectItem key={index} task={task} handleAccept={handleAccept} />
