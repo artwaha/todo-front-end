@@ -7,6 +7,7 @@ const taskService = require("../services/task-service");
 const Tasks = ({ location }) => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchDataTasks = useCallback(async () => {
     try {
@@ -34,10 +35,19 @@ const Tasks = ({ location }) => {
     fetchDataTasks();
   }, [fetchDataTasks]);
 
+  const filteredTasks = tasks.filter((task) =>
+    task.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       {seo()}
-      <SearchBar tasks={tasks} setTasks={setTasks} />
+      {tasks.length !== 0 && (
+        <SearchBar
+          searchQuery={searchQuery}
+          updateSearchQuery={setSearchQuery}
+        />
+      )}
       {displayTasks()}
     </>
   );
@@ -46,12 +56,12 @@ const Tasks = ({ location }) => {
     if (isLoading) {
       return <div>Loading</div>;
     } else {
-      return tasks.length <= 0 ? (
+      return filteredTasks.length <= 0 ? (
         <div>No {location !== "All" && location} Tasks</div>
       ) : (
         <>
           {titleBar()}
-          {tasks.map((task, index) => (
+          {filteredTasks.map((task, index) => (
             <TaskItem task={task} key={index} />
           ))}
         </>

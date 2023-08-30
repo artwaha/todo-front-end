@@ -9,8 +9,13 @@ const collaboratorService = require("../services/collaborator-service");
 const Rejected = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [rejectedTasks, setRejectedTasks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { fetchDataNavBar } = useOutletContext();
+
+  useEffect(() => {
+    fetchDataRejected();
+  }, []);
 
   const fetchDataRejected = async () => {
     setIsLoading(true);
@@ -19,9 +24,9 @@ const Rejected = () => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchDataRejected();
-  }, []);
+  const filteredTasks = rejectedTasks.filter((task) =>
+    task.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleAccept = async (data) => {
     const collaborator = { userId: 1, taskId: data.id };
@@ -34,6 +39,12 @@ const Rejected = () => {
   return (
     <div>
       <SEO description="Rejected" title="Rejected" />
+      {rejectedTasks.length !== 0 && (
+        <SearchBar
+          searchQuery={searchQuery}
+          updateSearchQuery={setSearchQuery}
+        />
+      )}
       {renderRejectedTasks()}
     </div>
   );
@@ -55,13 +66,12 @@ const Rejected = () => {
     if (isLoading) {
       return <div>Loading...</div>;
     } else {
-      return rejectedTasks.length <= 0 ? (
+      return filteredTasks.length <= 0 ? (
         <div>No Rejected Tasks</div>
       ) : (
         <div>
-          <SearchBar tasks={rejectedTasks} updateTasks={setRejectedTasks} />
           {titleBar()}
-          {rejectedTasks.map((task, index) => (
+          {filteredTasks.map((task, index) => (
             <RejectItem key={index} task={task} handleAccept={handleAccept} />
           ))}
         </div>
