@@ -18,6 +18,7 @@ const TaskDetails = () => {
   const { fetchDataNavBar } = useOutletContext();
 
   // Use state variables
+  const [isTaskOwner, setIsTaskOwner] = useState(false);
   const [mode, setMode] = useState("");
   const [task, setTask] = useState({});
   const [collaborators, setCollaborators] = useState([]);
@@ -44,7 +45,10 @@ const TaskDetails = () => {
   const fetchDataTaskDetails = useCallback(async () => {
     try {
       setIsLoading(true);
-      setTask(await taskService.getTaskDetails(taskId, 1));
+      const taskResult = await taskService.getTaskDetails(taskId, 1);
+      setIsTaskOwner(taskResult.createdBy.id === 1);
+      // taskResult
+      setTask(taskResult);
       setCollaborators(
         await collaboratorService.getTaskCollaborators(1, taskId)
       );
@@ -255,6 +259,7 @@ const TaskDetails = () => {
     handleMarkPendingInvitations,
     handlePendingInvitationsUndoSelection,
     setFormData,
+    isTaskOwner,
   };
 
   return (

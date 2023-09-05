@@ -20,6 +20,7 @@ const EditMode = () => {
     selectedPendingInvitations,
     handleMarkPendingInvitations,
     handlePendingInvitationsUndoSelection,
+    isTaskOwner,
   } = useOutletContext();
 
   useEffect(() => {
@@ -83,11 +84,15 @@ const EditMode = () => {
           </select>
         </div>
 
-        {collaboratorsDiv()}
+        {isTaskOwner && (
+          <>
+            {collaboratorsDiv()}
 
-        {pendingInvitationsDiv()}
+            {pendingInvitationsDiv()}
 
-        {usersToInviteDiv()}
+            {usersToInviteDiv()}
+          </>
+        )}
       </>
     );
   }
