@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+const userService = require("../services/user-service");
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -12,8 +13,17 @@ export default function Register() {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    console.log(formData);
-    // navigate("register");
+    const response = await userService.register(
+      formData.name,
+      formData.email,
+      formData.password
+    );
+    if (Object.keys(response).length !== 3) {
+      setErrorMessage("Unable to register user");
+    } else {
+      navigate("/tasks");
+      setErrorMessage("");
+    }
   };
 
   const handleChange = (event) => {
@@ -36,6 +46,11 @@ export default function Register() {
 
           <div className="m-7">
             <form onSubmit={handleRegister}>
+              {errorMessage && (
+                <p className="mb-2 text-sm text-center text-red-600">
+                  {errorMessage}
+                </p>
+              )}
               <div className="mb-6">
                 <label
                   htmlFor="name"

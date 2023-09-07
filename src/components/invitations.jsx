@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router-dom";
 import SearchBar from "./search-bar";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
+const userService = require("../services/user-service");
 
 const Invitations = () => {
   const [invitations, setInvitations] = useState([]);
@@ -18,8 +19,9 @@ const Invitations = () => {
   }, []);
 
   async function fetchDataInvitations() {
+    const userId = userService.getLoggedOnUser();
     setIsLoading(true);
-    setInvitations(await taskService.getInvitations(1));
+    setInvitations(await taskService.getInvitations(userId));
     setIsLoading(false);
   }
 

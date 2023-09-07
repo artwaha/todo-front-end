@@ -3,6 +3,7 @@ import SEO from "../components/layout/seo";
 import TaskItem from "./task-item";
 import SearchBar from "./search-bar";
 const taskService = require("../services/task-service");
+const userService = require("../services/user-service");
 
 const Tasks = ({ location }) => {
   const [tasks, setTasks] = useState([]);
@@ -12,16 +13,17 @@ const Tasks = ({ location }) => {
   const fetchDataTasks = useCallback(async () => {
     try {
       // Refresh the Navbar
+      const userId = userService.getLoggedOnUser();
       setIsLoading(true);
       switch (location) {
         case "Done":
-          setTasks(await taskService.getDoneTasks(null));
+          setTasks(await taskService.getDoneTasks(userId));
           break;
         case "Pending":
-          setTasks(await taskService.getPendingTasks(1));
+          setTasks(await taskService.getPendingTasks(userId));
           break;
         default:
-          setTasks(await taskService.getAllTasks(1));
+          setTasks(await taskService.getAllTasks(userId));
           break;
       }
       setIsLoading(false);

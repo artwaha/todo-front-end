@@ -4,6 +4,7 @@ import Footer from "../src/components/layout/footer";
 import Navbar from "../src/components/layout/navbar";
 export const NavStateContext = createContext();
 const taskService = require("./services/task-service");
+const userService = require("../src/services/user-service");
 
 function App() {
   const [allTasks, setAllTasks] = useState(0);
@@ -19,8 +20,9 @@ function App() {
   }, []);
 
   const fetchDataNavBar = async () => {
+    const userId = userService.getLoggedOnUser();
     setIsLoadingNavBar(true);
-    const count = await taskService.countTasks();
+    const count = await taskService.countTasks(userId);
     setAllTasks(count.all);
     setDoneTasks(count.done);
     setPendingTasks(count.pending);

@@ -76,9 +76,9 @@ export const getTaskDetails = async (taskId, userId) => {
   }
 };
 
-export const countTasks = async () => {
+export const countTasks = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/users/1/count`);
+    const response = await axios.get(`${BASE_URL}/users/${userId}/count`);
     return response.data;
   } catch (error) {
     console.log({ layer: "SERVICE", error: error.message });

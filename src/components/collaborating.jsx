@@ -3,6 +3,7 @@ import SEO from "./layout/seo";
 import TaskItem from "./task-item";
 import SearchBar from "./search-bar";
 const taskService = require("../services/task-service");
+const userService = require("../services/user-service");
 
 const Collaborating = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,8 +11,9 @@ const Collaborating = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchDataCollaborating = async () => {
+    const userId = userService.getLoggedOnUser();
     setIsLoading(true);
-    setCollaboratingTasks(await taskService.getCollaboratingTasks(1));
+    setCollaboratingTasks(await taskService.getCollaboratingTasks(userId));
     setIsLoading(false);
   };
 

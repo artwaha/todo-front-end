@@ -16,8 +16,8 @@ export default function Login() {
       setErrorMessage("Invalid Email of Password");
     } else {
       console.log(response);
+      navigate("/tasks");
       setErrorMessage("");
-      // : navigate("/tasks");
     }
   };
 

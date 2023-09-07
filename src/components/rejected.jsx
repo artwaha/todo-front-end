@@ -5,6 +5,7 @@ import RejectItem from "./reject-item";
 import SearchBar from "./search-bar";
 const taskService = require("../services/task-service");
 const collaboratorService = require("../services/collaborator-service");
+const userService = require("../services/user-service");
 
 const Rejected = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,8 +19,9 @@ const Rejected = () => {
   }, []);
 
   const fetchDataRejected = async () => {
+    const userId = userService.getLoggedOnUser();
     setIsLoading(true);
-    setRejectedTasks(await taskService.getRejectedTasks(1));
+    setRejectedTasks(await taskService.getRejectedTasks(userId));
     // console.log(await taskService.getRejectedTasks(1));
     setIsLoading(false);
   };
