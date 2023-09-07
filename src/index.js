@@ -12,11 +12,14 @@ import EditMode from "./components/edit-mode";
 import Invitations from "./components/invitations";
 import Collaborating from "./components/collaborating";
 import Rejected from "./components/rejected";
+import Login from "./components/login";
+import Register from "./components/register";
 // import NewNav from "./components/new-nav";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
-  { errorElement: <ErrorPage /> },
+  { path: "/", element: <Login />, errorElement: <ErrorPage /> },
+  { path: "register", element: <Register /> },
   {
     path: "tasks",
     element: <App />,

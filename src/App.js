@@ -31,7 +31,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col container mx-auto min-h-screen over ">
+    <div className="flex flex-col container mx-auto min-h-screen">
       <Navbar
         allTasks={allTasks}
         doneTasks={doneTasks}

@@ -15,7 +15,7 @@ const Tasks = ({ location }) => {
       setIsLoading(true);
       switch (location) {
         case "Done":
-          setTasks(await taskService.getDoneTasks(1));
+          setTasks(await taskService.getDoneTasks(null));
           break;
         case "Pending":
           setTasks(await taskService.getPendingTasks(1));
