@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../src/components/layout/footer";
-import Navbar from "../src/components/layout/navbar";
+import Navbar from "./components/layout/navbar";
 export const NavStateContext = createContext();
 const taskService = require("./services/task-service");
 const userService = require("../src/services/user-service");

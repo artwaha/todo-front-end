@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import NavItem from "./nav-item";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const Navbar = ({
   allTasks,
@@ -53,60 +54,60 @@ const Navbar = ({
     <nav className="p-4 mx-auto">
       {!isLoadingNavBar && (
         <div className="flex">
-          <Link
-            to="/tasks"
+          <NavItem
+            color="black"
+            type="All"
+            qty={allTasks}
+            path="/tasks"
+            activeTab={activeTab}
             onClick={() => updateActiveTab("All")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "All" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>All ({allTasks})</small>
-          </Link>
-          <Link
-            to="done"
+          />
+          <NavItem
+            color="blue"
+            colorValue={500}
+            type="Completed"
+            qty={doneTasks}
+            path="done"
+            activeTab={activeTab}
             onClick={() => updateActiveTab("Completed")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "Completed" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>Completed ({doneTasks})</small>
-          </Link>
-          <Link
-            to="pending"
+          />
+          <NavItem
+            color="orange"
+            colorValue={500}
+            type="Pending"
+            qty={pendingTasks}
+            path="pending"
+            activeTab={activeTab}
             onClick={() => updateActiveTab("Pending")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "Pending" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>Pending ({pendingTasks})</small>
-          </Link>
-          <Link
-            to="collaborating"
-            onClick={() => updateActiveTab("Collaborating")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "Collaborating" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>Collaborating ({collaboratingTasks})</small>
-          </Link>
-          <Link
-            to="invitations"
+          />
+          <NavItem
+            color="green"
+            colorValue={500}
+            type="Invitations"
+            qty={invitations}
+            path="invitations"
+            activeTab={activeTab}
             onClick={() => updateActiveTab("Invitations")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "Invitations" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>Invitations ({invitations})</small>
-          </Link>
-          <Link
-            to="rejected"
+          />
+          <NavItem
+            color="purple"
+            colorValue={500}
+            type="Collaborating"
+            qty={collaboratingTasks}
+            path="collaborating"
+            activeTab={activeTab}
+            onClick={() => updateActiveTab("Collaborating")}
+          />
+
+          <NavItem
+            color="red"
+            colorValue={500}
+            type="Rejected"
+            qty={rejectedTasks}
+            path="rejected"
+            activeTab={activeTab}
             onClick={() => updateActiveTab("Rejected")}
-            className={`border px-4 py-2 text-sm ${
-              activeTab === "Rejected" ? "bg-black text-white" : ""
-            } flex justify-center items-center`}
-          >
-            <small>Rejected ({rejectedTasks})</small>
-          </Link>
+          />
         </div>
       )}
     </nav>
