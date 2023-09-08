@@ -2,24 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import ErrorPage from "./components/layout/error-page";
-import Tasks from "./components/tasks";
-import "./index.css";
-import reportWebVitals from "./reportWebVitals";
-import TaskDetails from "./components/task-details";
-import ViewMode from "./components/view-mode";
+import Collaborating from "./components/collaborating";
 import EditMode from "./components/edit-mode";
 import Invitations from "./components/invitations";
-import Collaborating from "./components/collaborating";
-import Rejected from "./components/rejected";
+import ErrorPage from "./components/layout/error-page";
 import Login from "./components/login";
 import Register from "./components/register";
-import UserContexProvider from "./contexts/user-contex";
+import Rejected from "./components/rejected";
+import TaskDetails from "./components/task-details";
+import Tasks from "./components/tasks";
+import ViewMode from "./components/view-mode";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 const userService = require("./services/user-service");
-// import NewNav from "./components/new-nav";
+const userId = userService.getLoggedOnUser();
+console.log("Logged On User: ", userId);
 
-// const userId = userService.getLoggedOnUser();
-// console.log(userId);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -72,10 +70,7 @@ const router = createBrowserRouter([
 ]);
 root.render(
   // <React.StrictMode>
-  <UserContexProvider>
-    <RouterProvider router={router} />
-  </UserContexProvider>
-
+  <RouterProvider router={router} />
   // </React.StrictMode>
 );
 
