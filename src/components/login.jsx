@@ -15,7 +15,6 @@ export default function Login() {
     if (Object.keys(response).length !== 3) {
       setErrorMessage("Invalid Email of Password");
     } else {
-      console.log(response);
       navigate("/tasks");
       setErrorMessage("");
     }

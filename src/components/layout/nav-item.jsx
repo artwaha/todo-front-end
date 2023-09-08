@@ -12,7 +12,7 @@ const NavItem = ({ type, qty, path, color, colorValue, activeTab }) => {
         to={path}
         className={`${activeTab === type ? `font-semibold italic` : ""}`}
       >
-        {type}: {qty}
+        {type} {qty && `:`} {qty}
       </Link>
     </div>
   );

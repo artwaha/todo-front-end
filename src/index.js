@@ -14,8 +14,12 @@ import Collaborating from "./components/collaborating";
 import Rejected from "./components/rejected";
 import Login from "./components/login";
 import Register from "./components/register";
+import UserContexProvider from "./contexts/user-contex";
+const userService = require("./services/user-service");
 // import NewNav from "./components/new-nav";
 
+// const userId = userService.getLoggedOnUser();
+// console.log(userId);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   { path: "/", element: <Login />, errorElement: <ErrorPage /> },
@@ -68,7 +72,9 @@ const router = createBrowserRouter([
 ]);
 root.render(
   // <React.StrictMode>
-  <RouterProvider router={router} />
+  <UserContexProvider>
+    <RouterProvider router={router} />
+  </UserContexProvider>
 
   // </React.StrictMode>
 );

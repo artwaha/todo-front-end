@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import NavItem from "./nav-item";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -51,9 +51,13 @@ const Navbar = ({
   };
 
   return (
-    <nav className="p-4 mx-auto">
+    <nav className="p-4 mx-auto w-full max-w-screen-lg flex flex-col">
+      <div className="flex items-center justify-center my-2">
+        <h2>Sherlock Holmes,</h2>
+        <Link className=" ml-2">Logout</Link>
+      </div>
       {!isLoadingNavBar && (
-        <div className="flex">
+        <div className="flex mx-auto">
           <NavItem
             color="black"
             type="All"
