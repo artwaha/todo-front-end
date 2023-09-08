@@ -81,7 +81,7 @@ const Navbar = ({
             onClick={() => updateActiveTab("Pending")}
           />
           <NavItem
-            color="green"
+            color="purple"
             colorValue={500}
             type="Invitations"
             qty={invitations}
@@ -90,7 +90,7 @@ const Navbar = ({
             onClick={() => updateActiveTab("Invitations")}
           />
           <NavItem
-            color="purple"
+            color="green"
             colorValue={500}
             type="Collaborating"
             qty={collaboratingTasks}
