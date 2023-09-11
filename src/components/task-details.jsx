@@ -44,16 +44,19 @@ const TaskDetails = () => {
 
   const fetchDataTaskDetails = useCallback(async () => {
     try {
+      const userId = userService.getLoggedOnUserId();
       setIsLoading(true);
-      const taskResult = await taskService.getTaskDetails(taskId, 1);
-      setIsTaskOwner(taskResult.createdBy.id === 1);
+      const taskResult = await taskService.getTaskDetails(taskId, userId);
+      setIsTaskOwner(taskResult.createdBy.id === userId);
       // taskResult
       setTask(taskResult);
       setCollaborators(
-        await collaboratorService.getTaskCollaborators(1, taskId)
+        await collaboratorService.getTaskCollaborators(userId, taskId)
       );
-      setUsersToInvite(await userService.getUsersToInvite(1, taskId));
-      setPendingInvitations(await userService.getPendingInvitations(1, taskId));
+      setUsersToInvite(await userService.getUsersToInvite(userId, taskId));
+      setPendingInvitations(
+        await userService.getPendingInvitations(userId, taskId)
+      );
       setIsLoading(false);
     } catch (error) {
       console.error({ layer: "VIEW", error });

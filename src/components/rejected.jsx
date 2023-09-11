@@ -19,7 +19,7 @@ const Rejected = () => {
   }, []);
 
   const fetchDataRejected = async () => {
-    const userId = userService.getLoggedOnUser();
+    const userId = userService.getLoggedOnUserId();
     setIsLoading(true);
     setRejectedTasks(await taskService.getRejectedTasks(userId));
     // console.log(await taskService.getRejectedTasks(1));

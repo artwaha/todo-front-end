@@ -19,7 +19,7 @@ const Invitations = () => {
   }, []);
 
   async function fetchDataInvitations() {
-    const userId = userService.getLoggedOnUser();
+    const userId = userService.getLoggedOnUserId();
     setIsLoading(true);
     setInvitations(await taskService.getInvitations(userId));
     setIsLoading(false);

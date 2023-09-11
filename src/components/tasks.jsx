@@ -13,7 +13,7 @@ const Tasks = ({ location }) => {
   const fetchDataTasks = useCallback(async () => {
     try {
       // Refresh the Navbar
-      const userId = userService.getLoggedOnUser();
+      const userId = userService.getLoggedOnUserId();
       setIsLoading(true);
       switch (location) {
         case "Done":

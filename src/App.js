@@ -1,54 +1,82 @@
-import { createContext, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import Footer from "../src/components/layout/footer";
-import Navbar from "./components/layout/navbar";
-export const NavStateContext = createContext();
-const taskService = require("./services/task-service");
-const userService = require("../src/services/user-service");
+import React from "react";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
+import Collaborating from "./components/collaborating";
+import EditMode from "./components/edit-mode";
+import Invitations from "./components/invitations";
+import ErrorPage from "./components/layout/error-page";
+import Layout from "./components/layout/layout";
+import Login from "./components/login";
+import Register from "./components/register";
+import Rejected from "./components/rejected";
+import TaskDetails from "./components/task-details";
+import Tasks from "./components/tasks";
+import ViewMode from "./components/view-mode";
 
-function App() {
-  const [allTasks, setAllTasks] = useState(0);
-  const [doneTasks, setDoneTasks] = useState(0);
-  const [pendingTasks, setPendingTasks] = useState(0);
-  const [invitations, setInvitations] = useState(0);
-  const [collaboratingTasks, setCollaboratingTasks] = useState(0);
-  const [rejectedTasks, setRejectedTasks] = useState(0);
-  const [isLoadingNavBar, setIsLoadingNavBar] = useState(true);
-
-  useEffect(() => {
-    fetchDataNavBar();
-  }, []);
-
-  const fetchDataNavBar = async () => {
-    const userId = userService.getLoggedOnUser();
-    setIsLoadingNavBar(true);
-    const count = await taskService.countTasks(userId);
-    setAllTasks(count.all);
-    setDoneTasks(count.done);
-    setPendingTasks(count.pending);
-    setInvitations(count.invitations);
-    setCollaboratingTasks(count.collaborating);
-    setRejectedTasks(count.rejected);
-    setIsLoadingNavBar(false);
-  };
+const App = () => {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Navigate to="login" />,
+      errorElement: <ErrorPage />,
+    },
+    { path: "/login", element: <Login /> },
+    { path: "register", element: <Register /> },
+    {
+      path: "tasks",
+      element: <Layout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          index: true,
+          element: <Tasks location="All" />,
+        },
+        {
+          path: "done",
+          element: <Tasks location="Done" />,
+        },
+        {
+          path: "pending",
+          element: <Tasks location="Pending" />,
+        },
+        {
+          path: "invitations",
+          element: <Invitations />,
+        },
+        {
+          path: "collaborating",
+          element: <Collaborating />,
+        },
+        {
+          path: "rejected",
+          element: <Rejected />,
+        },
+        {
+          path: "/tasks/:taskId",
+          element: <TaskDetails />,
+          children: [
+            {
+              index: true,
+              element: <ViewMode />,
+            },
+            {
+              path: "edit",
+              element: <EditMode />,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
   return (
-    <div className="flex flex-col container mx-auto min-h-screen">
-      <Navbar
-        allTasks={allTasks}
-        doneTasks={doneTasks}
-        pendingTasks={pendingTasks}
-        invitations={invitations}
-        rejectedTasks={rejectedTasks}
-        collaboratingTasks={collaboratingTasks}
-        isLoadingNavBar={isLoadingNavBar}
-      />
-      <main className="flex-1 p-4 mx-auto w-full max-w-screen-lg">
-        <Outlet context={{ fetchDataNavBar }} />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
-}
+};
 
 export default App;

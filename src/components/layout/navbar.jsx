@@ -1,7 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./nav-item";
 import { useState } from "react";
 import { useEffect } from "react";
+const userService = require("../../services/user-service");
 
 const Navbar = ({
   allTasks,
@@ -11,8 +12,10 @@ const Navbar = ({
   collaboratingTasks,
   rejectedTasks,
   isLoadingNavBar,
+  username,
 }) => {
   const [activeTab, setActiveTab] = useState("");
+  const navigate = useNavigate();
 
   let location = useLocation();
 
@@ -46,11 +49,27 @@ const Navbar = ({
     };
   }, [location]);
 
+  const handleLogout = () => {
+    userService.logout();
+    navigate("/");
+  };
+
   return (
     <nav className="p-4 mx-auto w-full max-w-screen-lg flex flex-col">
-      <div className="flex items-center justify-center my-2">
-        <h2>Sherlock Holmes,</h2>
-        <Link className=" ml-2">Logout</Link>
+      <div className="flex items-center justify-between my-2 p-2 text-sm ">
+        {username && (
+          <h2>
+            Welcome, <span>{username}</span>
+          </h2>
+        )}
+        {username && (
+          <button
+            onClick={handleLogout}
+            className="underline text-red-700 font-semibold font-mono hover:font-bold"
+          >
+            Logout
+          </button>
+        )}
       </div>
       {!isLoadingNavBar && (
         <div className="flex mx-auto">

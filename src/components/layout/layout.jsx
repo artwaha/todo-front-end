@@ -14,14 +14,19 @@ function Layout() {
   const [collaboratingTasks, setCollaboratingTasks] = useState(0);
   const [rejectedTasks, setRejectedTasks] = useState(0);
   const [isLoadingNavBar, setIsLoadingNavBar] = useState(true);
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     fetchDataNavBar();
   }, []);
 
   const fetchDataNavBar = async () => {
-    const userId = userService.getLoggedOnUser();
+    // const userId = userService.getLoggedOnUserId();
     setIsLoadingNavBar(true);
+    const userId = userService.getLoggedOnUser().id;
+    const user_name = userService.getLoggedOnUser().name;
+    setUsername(user_name);
+
     const count = await taskService.countTasks(userId);
     setAllTasks(count.all);
     setDoneTasks(count.done);
@@ -42,6 +47,7 @@ function Layout() {
         rejectedTasks={rejectedTasks}
         collaboratingTasks={collaboratingTasks}
         isLoadingNavBar={isLoadingNavBar}
+        username={username}
       />
       <main className="flex-1 p-4 mx-auto w-full max-w-screen-lg">
         <Outlet context={{ fetchDataNavBar }} />

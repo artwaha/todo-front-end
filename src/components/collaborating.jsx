@@ -11,7 +11,7 @@ const Collaborating = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const fetchDataCollaborating = async () => {
-    const userId = userService.getLoggedOnUser();
+    const userId = userService.getLoggedOnUserId();
     setIsLoading(true);
     setCollaboratingTasks(await taskService.getCollaboratingTasks(userId));
     setIsLoading(false);

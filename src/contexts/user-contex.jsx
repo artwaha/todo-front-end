@@ -3,7 +3,7 @@ const userService = require("../services/user-service");
 
 const UserContext = createContext();
 const UserContexProvider = ({ children }) => {
-  const user = userService.getLoggedOnUser();
+  const user = userService.getLoggedOnUserId();
   return (
     <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
   );

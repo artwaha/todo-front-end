@@ -37,11 +37,24 @@ export const register = async (name, email, password) => {
   }
 };
 
-export const getLoggedOnUser = () => {
+export const getLoggedOnUserId = () => {
   const logged_on_user = localStorage.getItem("logged-on-user");
   const stored_logged_on_user = JSON.parse(logged_on_user);
   const userId = stored_logged_on_user === null ? 0 : stored_logged_on_user.id;
   return userId;
+};
+
+export const getLoggedOnUser = () => {
+  const logged_on_user = localStorage.getItem("logged-on-user");
+  const stored_logged_on_user = JSON.parse(logged_on_user);
+  const emptyUser = { id: 0, name: "", email: "" };
+  const user =
+    stored_logged_on_user === null ? emptyUser : stored_logged_on_user;
+  return user;
+};
+
+export const logout = () => {
+  localStorage.removeItem("logged-on-user");
 };
 
 export const getPendingInvitations = async (userId, taskId) => {

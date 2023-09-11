@@ -9,7 +9,7 @@ const NavItem = ({ type, qty, path, borderColor, activeTab }) => {
         activeTab === type ? `font-semibold italic` : ""
       }`}
     >
-      {type} : {qty}
+      {type} {qty ? ":" : ""} {qty}
     </Link>
   );
 };
