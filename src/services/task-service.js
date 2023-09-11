@@ -88,7 +88,10 @@ export const countTasks = async (userId) => {
 
 export const updateTask = async (task, taskId, userId) => {
   try {
-    const response = await axios.put(`${BASE_URL}/${taskId}/users/${1}`, task);
+    const response = await axios.put(
+      `${BASE_URL}/${taskId}/users/${userId}`,
+      task
+    );
     return response.data;
   } catch (error) {
     console.log({ layer: "SERVICE", error: error.message });

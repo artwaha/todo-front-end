@@ -189,6 +189,7 @@ const TaskDetails = () => {
   }
 
   const handleSave = async () => {
+    const userId = userService.getLoggedOnUserId();
     const updatedFormData = getFormData();
     if (
       !markedCollaborators.length &&
@@ -231,7 +232,7 @@ const TaskDetails = () => {
       }
 
       if (Object.keys(updatedFormData).length) {
-        await taskService.updateTask(updatedFormData, taskId, 100);
+        await taskService.updateTask(updatedFormData, taskId, userId);
       }
 
       // Refresh Task details

@@ -30,7 +30,8 @@ const Invitations = () => {
   );
 
   const handleReject = async (data) => {
-    const collaborator = { userId: 1, taskId: data.id };
+    const userId = userService.getLoggedOnUserId();
+    const collaborator = { userId: userId, taskId: data.id };
     // API accespts an array
     await collaboratorService.removeCollaborator([collaborator]);
     // Refresh/reload the component(s)
@@ -39,7 +40,8 @@ const Invitations = () => {
   };
 
   const handleAccept = async (data) => {
-    const collaborator = { userId: 1, taskId: data.id };
+    const userId = userService.getLoggedOnUserId();
+    const collaborator = { userId: userId, taskId: data.id };
     await collaboratorService.addCollaborator(collaborator);
     // Refresh/reload the component(s)
     fetchDataInvitations();
