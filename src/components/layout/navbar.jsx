@@ -46,10 +46,6 @@ const Navbar = ({
     };
   }, [location]);
 
-  const updateActiveTab = (tab) => {
-    setActiveTab(tab);
-  };
-
   return (
     <nav className="p-4 mx-auto w-full max-w-screen-lg flex flex-col">
       <div className="flex items-center justify-center my-2">
@@ -59,58 +55,47 @@ const Navbar = ({
       {!isLoadingNavBar && (
         <div className="flex mx-auto">
           <NavItem
-            color="black"
             type="All"
             qty={allTasks}
             path="/tasks"
+            borderColor="border-black"
             activeTab={activeTab}
-            onClick={() => updateActiveTab("All")}
           />
           <NavItem
-            color="blue"
-            colorValue={500}
             type="Completed"
             qty={doneTasks}
             path="done"
+            borderColor="border-blue-500"
             activeTab={activeTab}
-            onClick={() => updateActiveTab("Completed")}
           />
           <NavItem
-            color="orange"
-            colorValue={500}
             type="Pending"
             qty={pendingTasks}
             path="pending"
+            borderColor="border-orange-500"
             activeTab={activeTab}
-            onClick={() => updateActiveTab("Pending")}
           />
           <NavItem
-            color="purple"
-            colorValue={500}
             type="Invitations"
             qty={invitations}
             path="invitations"
+            borderColor="border-purple-500"
             activeTab={activeTab}
-            onClick={() => updateActiveTab("Invitations")}
           />
           <NavItem
-            color="green"
-            colorValue={500}
             type="Collaborating"
             qty={collaboratingTasks}
             path="collaborating"
+            borderColor="border-green-500"
             activeTab={activeTab}
-            onClick={() => updateActiveTab("Collaborating")}
           />
 
           <NavItem
-            color="red"
-            colorValue={500}
             type="Rejected"
             qty={rejectedTasks}
             path="rejected"
+            borderColor="border-red-500"
             activeTab={activeTab}
-            onClick={() => updateActiveTab("Rejected")}
           />
         </div>
       )}
