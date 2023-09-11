@@ -69,7 +69,7 @@ const Rejected = () => {
       return <div>Loading...</div>;
     } else {
       return filteredTasks.length <= 0 ? (
-        <div>No Rejected Tasks</div>
+        <div className="p-2 text-center">No Rejected Tasks found</div>
       ) : (
         <div>
           {titleBar()}

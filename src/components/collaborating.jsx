@@ -43,7 +43,7 @@ const Collaborating = () => {
       return <div>Loading</div>;
     } else {
       return filteredTasks.length <= 0 ? (
-        <div> No Invitations</div>
+        <div className="p-2 text-center"> No Invitations found</div>
       ) : (
         <>
           {titleBar()}

@@ -59,7 +59,9 @@ const Tasks = ({ location }) => {
       return <div>Loading</div>;
     } else {
       return filteredTasks.length <= 0 ? (
-        <div>No {location !== "All" && location} Tasks</div>
+        <div className="p-2 text-center">
+          No {location !== "All" && location} Tasks Found
+        </div>
       ) : (
         <>
           {titleBar()}
