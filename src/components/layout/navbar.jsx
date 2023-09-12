@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./nav-item";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useAuthContext } from "../../contexts/user-contex";
+import { useAuthContext } from "../../contexts/auth-context";
 const userService = require("../../services/user-service");
 
 const Navbar = ({
