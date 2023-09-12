@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import NavItem from "./nav-item";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useAuthContext } from "../../contexts/user-contex";
 const userService = require("../../services/user-service");
 
 const Navbar = ({
@@ -16,8 +17,9 @@ const Navbar = ({
 }) => {
   const [activeTab, setActiveTab] = useState("");
   const navigate = useNavigate();
-
   let location = useLocation();
+
+  const { updateAuthenticatedUser } = useAuthContext();
 
   useEffect(() => {
     const temp = location.pathname.substring(7);
@@ -50,7 +52,9 @@ const Navbar = ({
   }, [location]);
 
   const handleLogout = () => {
+    // delete items from local storage
     userService.logout();
+    updateAuthenticatedUser(false);
     navigate("/");
   };
 
@@ -58,8 +62,8 @@ const Navbar = ({
     <nav className="p-4 mx-auto w-full max-w-screen-lg flex flex-col">
       <div className="flex items-center justify-between my-2 p-2 text-sm ">
         {username && (
-          <h2>
-            Welcome, <span>{username}</span>
+          <h2 className="font-mono">
+            Welcome, <span className="font-extrabold">{username}</span>
           </h2>
         )}
         {username && (

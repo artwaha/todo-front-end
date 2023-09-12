@@ -1,16 +1,29 @@
-import React, { createContext, useContext } from "react";
-const userService = require("../services/user-service");
+import React, { createContext, useContext, useState } from "react";
 
-const UserContext = createContext();
-const UserContexProvider = ({ children }) => {
-  const user = userService.getLoggedOnUserId();
+const AuthContext = createContext();
+
+const AuthenticatedUserContex = ({ children }) => {
+  let stored_isAuthenticated = localStorage.getItem("is-authenticated");
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    stored_isAuthenticated !== null ? stored_isAuthenticated : false
+  );
+
+  const updateAuthenticatedUser = (authStatus) => {
+    setIsAuthenticated(authStatus);
+    authStatus
+      ? localStorage.setItem("is-authenticated", authStatus)
+      : localStorage.removeItem("is-authenticated");
+  };
+
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <AuthContext.Provider value={{ isAuthenticated, updateAuthenticatedUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export default UserContexProvider;
+export default AuthenticatedUserContex;
 
-export function useLoggedOnUser() {
-  return useContext(UserContext);
+export function useAuthContext() {
+  return useContext(AuthContext);
 }

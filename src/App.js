@@ -15,6 +15,7 @@ import Rejected from "./components/rejected";
 import TaskDetails from "./components/task-details";
 import Tasks from "./components/tasks";
 import ViewMode from "./components/view-mode";
+import ProtectedRoute from "./components/layout/protected-route";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -27,7 +28,12 @@ const App = () => {
     { path: "register", element: <Register /> },
     {
       path: "tasks",
-      element: <Layout />,
+      // element: <Layout />,
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
       errorElement: <ErrorPage />,
       children: [
         {

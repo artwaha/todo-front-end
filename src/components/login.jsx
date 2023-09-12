@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../contexts/user-contex";
 const userService = require("../services/user-service");
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { updateAuthenticatedUser } = useAuthContext();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     const response = await userService.login(formData.email, formData.password);
-    // console.log("Length: ", Object.keys(response).length);
-    // console.log(response);
     if (Object.keys(response).length !== 3) {
       setErrorMessage("Invalid Email of Password");
     } else {
+      updateAuthenticatedUser(true);
       navigate("/tasks");
       setErrorMessage("");
     }
