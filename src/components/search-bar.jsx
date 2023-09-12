@@ -4,6 +4,7 @@ const SearchBar = ({ searchQuery, updateSearchQuery }) => {
   return (
     <input
       type="search"
+      name="search"
       value={searchQuery}
       onChange={(e) => updateSearchQuery(e.target.value)}
       className="block outline-none mx-auto py-2 mb-2 italic px-4 border border-gray-400 rounded-full text-sm"
