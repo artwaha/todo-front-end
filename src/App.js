@@ -16,6 +16,7 @@ import TaskDetails from "./components/task-details";
 import Tasks from "./components/tasks";
 import ViewMode from "./components/view-mode";
 import ProtectedRoute from "./components/layout/protected-route";
+import NewTask from "./components/new-task";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const App = () => {
         {
           path: "done",
           element: <Tasks location="Done" />,
+        },
+        {
+          path: "new-task",
+          element: <NewTask />,
         },
         {
           path: "pending",

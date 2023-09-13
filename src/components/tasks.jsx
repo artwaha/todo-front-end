@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import SEO from "../components/layout/seo";
 import TaskItem from "./task-item";
 import SearchBar from "./search-bar";
+import { Link } from "react-router-dom";
 const taskService = require("../services/task-service");
 const userService = require("../services/user-service");
 
@@ -52,6 +53,33 @@ const Tasks = ({ location }) => {
           updateSearchQuery={setSearchQuery}
         />
       )}
+      <div
+        className={`flex items-center text-xs ${
+          tasks.length !== 0 ? "justify-end" : "justify-center"
+        }`}
+      >
+        <Link
+          to="/tasks/new-task"
+          className="bg-black text-white px-3 py-2 outline-none w-fit rounded-full flex items-center"
+        >
+          <svg
+            viewBox="0 0 512 512"
+            fill="currentColor"
+            height="1.5em"
+            width="1.5em"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={40}
+              d="M256 112v288M400 256H112"
+            />
+          </svg>
+          New task
+        </Link>
+      </div>
       {displayTasks()}
     </>
   );
