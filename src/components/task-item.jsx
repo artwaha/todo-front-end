@@ -9,28 +9,9 @@ const TaskItem = ({ task }) => {
     >
       <p>{task.id}</p>
       <p>{task.title}</p>
-      <p className="mx-auto">
-        <span
-          className={`px-2 py-1 font-mono rounded-full w-fit ${
-            task.priority === "HIGH"
-              ? "text-white bg-[#FF0000]"
-              : "text-white bg-green-600"
-          }`}
-        >
-          {task.priority}
-        </span>
-      </p>
-      <p className="mx-auto">
-        <span
-          className={`uppercase px-2 py-1 font-mono rounded-full text-white  ${
-            task.isCompleted ? "bg-blue-700" : "bg-orange-500"
-          } `}
-        >
-          {task.isCompleted ? "Completed" : "Pending"}
-        </span>
-      </p>
+      <p className="mx-auto">{task.priority}</p>
+      <p className="mx-auto uppercase">{task.isCompleted ? "Completed" : "Pending"}</p>
       <Link to={`/tasks/${task.id}`} className="ml-auto">
-        {/* <Link to={`/tasks/333`} className="ml-auto"> */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

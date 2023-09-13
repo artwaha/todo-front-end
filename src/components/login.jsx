@@ -1,13 +1,21 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/auth-context";
 const userService = require("../services/user-service");
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
+  const [authMessage, setAuthMessage] = useState("");
+
   const navigate = useNavigate();
-  const { updateAuthenticatedUser } = useAuthContext();
+  const { updateIsAuthenticated } = useAuthContext();
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    setAuthMessage(state);
+  }, [state]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -15,7 +23,7 @@ export default function Login() {
     if (Object.keys(response).length !== 3) {
       setErrorMessage("Invalid Email of Password");
     } else {
-      updateAuthenticatedUser(true);
+      updateIsAuthenticated(true);
       navigate("/tasks");
       setErrorMessage("");
     }
@@ -32,6 +40,11 @@ export default function Login() {
     <div className="flex items-center min-h-screen">
       <div className="container mx-auto">
         <div className="max-w-md mx-auto my-10">
+          {authMessage && (
+            <p className="mb-2 text-sm text-center text-red-600">
+              {authMessage}
+            </p>
+          )}
           <div className="text-center">
             <h1 className="my-3 text-3xl font-semibold text-gray-700">
               Sign in
@@ -100,7 +113,7 @@ export default function Login() {
               <p className="text-sm text-center text-gray-400">
                 Don't have an account yet?{" "}
                 <Link
-                  to="register"
+                  to="/register"
                   className="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500"
                 >
                   Sign up

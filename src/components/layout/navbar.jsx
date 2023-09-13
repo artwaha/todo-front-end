@@ -19,7 +19,7 @@ const Navbar = ({
   const navigate = useNavigate();
   let location = useLocation();
 
-  const { updateAuthenticatedUser } = useAuthContext();
+  const { updateIsAuthenticated } = useAuthContext();
 
   useEffect(() => {
     const temp = location.pathname.substring(7);
@@ -54,22 +54,18 @@ const Navbar = ({
   const handleLogout = () => {
     // delete items from local storage
     userService.logout();
-    updateAuthenticatedUser(false);
+    updateIsAuthenticated(false);
     navigate("/");
   };
 
   return (
     <nav className="p-4 mx-auto w-full max-w-screen-lg flex flex-col">
       <div className="flex items-center justify-between my-2 p-2 text-sm ">
-        {username && (
-          <h2 className="font-mono">
-            Welcome, <span className="font-extrabold">{username}</span>
-          </h2>
-        )}
+        {username && <h2 className="underline">Welcome, {username}</h2>}
         {username && (
           <button
             onClick={handleLogout}
-            className="underline text-red-700 font-semibold font-mono hover:font-bold"
+            className="underline text-red-700 font-semibold hover:font-bold"
           >
             Logout
           </button>

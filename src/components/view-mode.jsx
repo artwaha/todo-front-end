@@ -21,30 +21,21 @@ const ViewMode = () => {
 
   function taskDetails() {
     return (
-      <>
-        <div className="mb-2 flex font-semibold items-center">
-          <h1 className="text-2xl">{task.title}</h1>
-          <div className="ml-2">
-            <span
-              className={`px-2 py-1 font-mono rounded-full ${
-                task.priority === "HIGH"
-                  ? "text-white bg-[#FF0000]"
-                  : "text-white  bg-green-600"
-              }`}
-            >
-              {task.priority}
-            </span>
-            <span
-              className={`uppercase px-2 py-1 ml-2 font-mono rounded-full text-gray-50 ${
-                task.isCompleted ? "bg-blue-700" : "bg-orange-500"
-              }`}
-            >
-              {task.isCompleted ? "Completed" : "Pending"}
-            </span>
-          </div>
-        </div>
-        <p className="text-gray-600 text-lg mb-6">{task.description}</p>
+      <div>
+        <h1 className="text-2xl mb-2 font-semibold">{task.title}</h1>
 
+        <p className="text-gray-600 text-lg mb-4">{task.description}</p>
+
+        <p>
+          <span>Prioriy: </span>
+          <span className="text-sm text-gray-600">{task.priority}</span>
+        </p>
+        <p>
+          <span>Status: </span>
+          <span className="text-sm text-gray-600 uppercase">
+            {task.isCompleted ? "Completed" : "Pending"}
+          </span>
+        </p>
         <p>
           <span>Created By: </span>
           <span className="text-sm text-gray-600">{task.createdBy.name}</span>
@@ -109,7 +100,7 @@ const ViewMode = () => {
             )}
           </>
         )}
-      </>
+      </div>
     );
   }
 };

@@ -8,7 +8,7 @@ const AuthenticatedUserContex = ({ children }) => {
     stored_isAuthenticated !== null ? stored_isAuthenticated : false
   );
 
-  const updateAuthenticatedUser = (authStatus) => {
+  const updateIsAuthenticated = (authStatus) => {
     setIsAuthenticated(authStatus);
     authStatus
       ? localStorage.setItem("is-authenticated", authStatus)
@@ -16,7 +16,7 @@ const AuthenticatedUserContex = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, updateAuthenticatedUser }}>
+    <AuthContext.Provider value={{ isAuthenticated, updateIsAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
