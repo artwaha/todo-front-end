@@ -10,13 +10,13 @@ const Invitation = ({ invitation, handleAccept, handleReject }) => {
       <p>{invitation.title}</p>
       <div className="mx-auto grid grid-cols-2 gap-2">
         <button
-          className="text-green-500 hover:underline hover:font-semibold"
+          className="text-green-700 hover:underline hover:font-semibold"
           onClick={() => handleAccept(invitation)}
         >
           Accept
         </button>
         <button
-          className="text-red-500 hover:underline hover:font-semibold"
+          className="text-red-700 hover:underline hover:font-semibold"
           onClick={() => handleReject(invitation)}
         >
           Reject

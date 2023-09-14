@@ -98,3 +98,13 @@ export const updateTask = async (task, taskId, userId) => {
     return {};
   }
 };
+
+export const saveTask = async (task) => {
+  try {
+    const response = await axios.post(BASE_URL, task);
+    return response.data;
+  } catch (error) {
+    console.log({ layer: "SERVICE", error: error.message });
+    return {};
+  }
+};

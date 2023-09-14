@@ -296,6 +296,7 @@ const TaskDetails = () => {
       <div className="flex items-center mb-4">
         {backButton()}
         {saveButton()}
+        {deleteButton()}
         {modeButton()}
       </div>
     );
@@ -306,13 +307,14 @@ const TaskDetails = () => {
       <select
         onChange={handleChangeMode}
         value={mode}
-        className="outline-none text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+        // className="outline-none text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+        className="text-sm rounded-full border border-gray-700 px-2 py-1"
       >
         <option value="view" className="text-black">
-          View Mode
+          View
         </option>
         <option value="edit" className="text-black">
-          Edit Mode
+          Edit
         </option>
       </select>
     );
@@ -323,7 +325,7 @@ const TaskDetails = () => {
       mode === "edit" && (
         <button
           onClick={handleSave}
-          className="mr-2 text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+          className=" mr-2 text-sm rounded-full border border-gray-700 px-2 py-1 ml-auto hover:font-semibold"
         >
           Save
         </button>
@@ -331,11 +333,22 @@ const TaskDetails = () => {
     );
   }
 
+  function deleteButton() {
+    return (
+      <button
+        onClick={() => console.log("Delete")}
+        className="mr-2 text-sm text-red-700 rounded-full border border-gray-700 px-2 py-1"
+      >
+        Delete
+      </button>
+    );
+  }
+
   function backButton() {
     return (
       <button
-        onClick={() => navigate(-1)}
-        className="mr-auto text-xs inline-flex items-center p-2 rounded-md text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 shadow-md transition-colors"
+        onClick={() => navigate("/tasks")}
+        className="mr-auto text-sm rounded-full border border-gray-700 hover:font-semibold px-2 py-1 flex items-center"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +364,7 @@ const TaskDetails = () => {
             d="M10 19l-7-7m0 0l7-7m-7 7h18"
           />
         </svg>
-        Back
+        <span className="ml-[-5px]">Back</span>
       </button>
     );
   }

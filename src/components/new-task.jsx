@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
+const taskService = require("../services/task-service");
+const userService = require("../services/user-service");
 
 const NewTask = () => {
+  const { fetchDataNavBar } = useOutletContext();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -32,7 +37,7 @@ const NewTask = () => {
     return updatedFormData;
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const updatedFormData = getFormData();
     // console.log(Object.keys(updatedFormData).length);
 
@@ -42,7 +47,23 @@ const NewTask = () => {
     ) {
       alert("Please fill all required fields!");
     } else {
-      console.log(updatedFormData);
+      const userId = userService.getLoggedOnUserId();
+      const postFormData = {
+        ...formData,
+        createdBy: {
+          id: userId,
+        },
+      };
+
+      const savedTask = await taskService.saveTask(postFormData);
+
+      if (Object.keys(saveButton).length) {
+        fetchDataNavBar();
+        navigate(`/tasks/${savedTask.id}`);
+      } else {
+        navigate("/tasks");
+        alert("Unable to save...something went wrong!");
+      }
     }
   };
 
@@ -107,7 +128,7 @@ const NewTask = () => {
   function backButton() {
     return (
       <button
-        onClick={() => console.log("Back")}
+        onClick={() => navigate("/tasks")}
         className="text-sm rounded-full border border-black hover:font-semibold px-2 py-1 flex items-center"
       >
         <svg
@@ -124,7 +145,7 @@ const NewTask = () => {
             d="M10 19l-7-7m0 0l7-7m-7 7h18"
           />
         </svg>
-        Back
+        <span className="ml-[-5px]">Back</span>
       </button>
     );
   }

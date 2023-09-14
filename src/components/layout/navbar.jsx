@@ -61,11 +61,11 @@ const Navbar = ({
   return (
     <nav className="p-4 mx-auto w-full max-w-screen-lg flex flex-col">
       <div className="flex items-center justify-between my-2 p-2 text-sm ">
-        {username && <h2 className="underline">Welcome, {username}</h2>}
+        {username && <h2 className="text-gray-700">Welcome, {username}</h2>}
         {username && (
           <button
             onClick={handleLogout}
-            className="underline text-red-700 font-semibold hover:font-bold"
+            className="hover:underline text-gray-700"
           >
             Logout
           </button>

@@ -9,7 +9,7 @@ const RejectItem = ({ task, handleAccept }) => {
       <p>{task.id}</p>
       <p>{task.title}</p>
       <button
-        className="text-green-500 hover:underline hover:font-semibold"
+        className="text-green-700 hover:underline hover:font-semibold"
         onClick={() => handleAccept(task)}
       >
         Accept
