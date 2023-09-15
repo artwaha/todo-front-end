@@ -57,7 +57,7 @@ const NewTask = () => {
 
       const savedTask = await taskService.saveTask(postFormData);
 
-      if (Object.keys(saveButton).length) {
+      if (Object.keys(savedTask).length) {
         fetchDataNavBar();
         navigate(`/tasks/${savedTask.id}`);
       } else {
