@@ -55,7 +55,7 @@ const App = () => {
         },
         {
           path: "invitations",
-          element: <Invitations />,
+          element: <Invitations />
         },
         {
           path: "collaborating",
