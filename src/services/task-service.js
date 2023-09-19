@@ -108,9 +108,12 @@ export const saveTask = async (task) => {
     return {};
   }
 };
+
 export const deleteTask = async (taskId, userId) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/${taskId}/users/${userId}`);
+    const response = await axios.delete(
+      `${BASE_URL}/${taskId}/users/${userId}`
+    );
     return response.data;
   } catch (error) {
     console.log({ layer: "SERVICE", error: error.message });
