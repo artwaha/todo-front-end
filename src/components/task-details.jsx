@@ -296,7 +296,7 @@ const TaskDetails = () => {
       <div className="flex items-center mb-4">
         {backButton()}
         {saveButton()}
-        {deleteButton()}
+        {isTaskOwner && deleteButton()}
         {modeButton()}
       </div>
     );

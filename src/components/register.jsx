@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../contexts/auth-context";
 const userService = require("../services/user-service");
 
 export default function Register() {
@@ -10,6 +11,7 @@ export default function Register() {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { updateIsAuthenticated } = useAuthContext();
 
   const handleRegister = async (event) => {
     event.preventDefault();
@@ -21,6 +23,7 @@ export default function Register() {
     if (Object.keys(response).length !== 3) {
       setErrorMessage("Unable to register user");
     } else {
+      updateIsAuthenticated(true);
       navigate("/tasks");
       setErrorMessage("");
     }
