@@ -9,8 +9,8 @@ const TaskItem = ({ task }) => {
     >
       <p>{task.id}</p>
       <p>{task.title}</p>
-      <p className="mx-auto">{task.priority}</p>
-      <p className="mx-auto uppercase">{task.isCompleted ? "Completed" : "Pending"}</p>
+      <p>{task.priority}</p>
+      <p className="uppercase">{task.isCompleted ? "Completed" : "Pending"}</p>
       <Link to={`/tasks/${task.id}`} className="ml-auto">
         <svg
           xmlns="http://www.w3.org/2000/svg"

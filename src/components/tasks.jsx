@@ -123,8 +123,8 @@ const Tasks = ({ location }) => {
       >
         <p className="">#</p>
         <p>Title</p>
-        <p className="mx-auto">Priority </p>
-        <p className="mx-auto">Status </p>
+        <p>Priority </p>
+        <p>Status </p>
       </div>
     );
   }
