@@ -188,6 +188,18 @@ const TaskDetails = () => {
     return updatedFormData;
   }
 
+  const handleDelete = async () => {
+    const userId = userService.getLoggedOnUserId();
+    const response =await taskService.deleteTask(taskId, userId)
+    if (response === "Task deleted Successfully") {
+      alert(response)
+      navigate("/tasks")
+      fetchDataNavBar()
+    }else{
+      alert("Unable to delete Task")
+    }
+  }
+
   const handleSave = async () => {
     const userId = userService.getLoggedOnUserId();
     const updatedFormData = getFormData();
@@ -336,7 +348,7 @@ const TaskDetails = () => {
   function deleteButton() {
     return (
       <button
-        onClick={() => console.log("Delete")}
+        onClick={handleDelete}
         className="mr-2 text-sm text-red-700 rounded-full border border-gray-700 px-2 py-1"
       >
         Delete
